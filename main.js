@@ -32,7 +32,12 @@ const revealObs = new IntersectionObserver(entries => {
           baSlider.initialized = true;
           
           if (baSlider.prev) baSlider.prev.addEventListener('click', () => changeBaSlide(-1));
-          if (baSlider.next) baSlider.next.addEventListener('click', () => changeBaSlide(1));
+          if (baSlider.next) baSlider.next.addEventListener('click', () => {
+            // Show all hidden cards on "Ver mais"
+            baSlider.cards.forEach(card => card.classList.remove('hidden'));
+            baSlider.next.style.display = 'none'; // Hide the button after showing all
+            if (baSlider.pagination) baSlider.pagination.style.display = 'none';
+          });
           window.addEventListener('resize', renderBaSlides, { passive: true });
           renderBaSlides();
         }

@@ -1,22 +1,39 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover"/>
   <meta name="description" content="Alfred Pintando as Cores — Pintura, Reforma e Decoração. Orçamento com material incluso, visita técnica e parceria com outras áreas. CNPJ 55.942.739/0001-04. Fale no WhatsApp!"/>
-  <meta name="keywords" content="pintura residencial, pintura comercial, pintor profissional, textura, impermeabilização, cimento queimado, efeito mármore, revestimento, Alfred Pintando as Cores"/>
+  <meta name="keywords" content="pintura residencial, pintura comercial, pintor profissional, textura, impermeabilização, cimento queimado, revestimento, Alfred Pintando as Cores"/>
   <meta property="og:title" content="Alfred Pintando as Cores — Pintura Profissional"/>
   <meta property="og:description" content="Transforme seu ambiente com pintura profissional. Orçamento grátis!"/>
   <meta property="og:type" content="website"/>
-  <meta name="theme-color" content="#1565C0"/>
-  <!-- Performance optimizations: Compress images to WebP format for faster loading -->
-  <title>Alfred Pintando as Cores — Pintura & Reforma & Decoração</title>
+  <meta name="theme-color" content="#0A2F6E"/>
 
-  <!-- Fonts -->
+  <title>Alfred Pintando as Cores — Pintura &amp; Reforma &amp; Decoração</title>
+
+  <!-- Favicon -->
+  <link rel="icon" href="imagens/Slogan Imagem 2.png" type="image/png"/>
+
+  <!--
+    PERFORMANCE:
+    • preconnect → eliminates DNS/TLS for Google Fonts (saves ~200ms)
+    • preload critical CSS + above-fold images → removes render-blocking
+    • font-display:swap inside Google Fonts URL → no invisible text
+  -->
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet"/>
 
-  <!-- Styles -->
+  <!-- Preload above-fold images (hero + logo) -->
+  <link rel="preload" as="image" href="imagens/verygood.webp" type="image/webp"/>
+  <link rel="preload" as="image" href="imagens/Slogan Imagem 2.webp" type="image/webp"/>
+
+  <!-- Non-blocking font load -->
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" media="print" onload="this.media='all'"/>
+  <noscript>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+  </noscript>
+
   <link rel="stylesheet" href="style.css"/>
 </head>
 <body>
@@ -25,8 +42,11 @@
      NAV
      ====================================================== -->
 <nav id="nav">
-  <a href="#top" class="nav-logo">
-    <img src="imagens/Slogan Imagem 2.webp"/>
+  <a href="#hero" class="nav-logo">
+    <img src="imagens/Slogan Imagem 2.webp"
+         alt="Alfred Pintando as Cores logo"
+         width="40" height="40"
+         loading="eager" decoding="async"/>
     Alfred Pintando<span>&nbsp;as Cores</span>
   </a>
 
@@ -48,13 +68,13 @@
 </nav>
 
 <!-- Mobile Menu -->
-<div class="mobile-menu" id="mobileMenu">
+<div class="mobile-menu" id="mobileMenu" role="dialog" aria-label="Menu de navegação">
   <a href="#about"        onclick="toggleMenu()">Sobre</a>
   <a href="#services"     onclick="toggleMenu()">Serviços</a>
   <a href="#gallery"      onclick="toggleMenu()">Galeria</a>
   <a href="#testimonials" onclick="toggleMenu()">Depoimentos</a>
   <a href="#contact"      onclick="toggleMenu()">Contato</a>
-  <a href="https://wa.me/5583996956060" target="_blank" rel="noopener" style="color:#42A5F5">
+  <a href="https://wa.me/5583996956060" target="_blank" rel="noopener" style="color:#7FD3FF">
     💬 WhatsApp
   </a>
 </div>
@@ -64,16 +84,16 @@
      HERO
      ====================================================== -->
 <section id="hero">
-  <div class="hero-deco-1"></div>
-  <div class="hero-deco-2"></div>
-  <div class="hero-splash"></div>
+  <div class="hero-deco-1" aria-hidden="true"></div>
+  <div class="hero-deco-2" aria-hidden="true"></div>
+  <div class="hero-splash" aria-hidden="true"></div>
   <div class="hero-bg-photo" aria-hidden="true"></div>
 
   <div class="hero-grid">
     <!-- Left: copy -->
     <div class="hero-content">
       <div class="hero-live-badge">
-        <span class="live-dot"></span>
+        <span class="live-dot" aria-hidden="true"></span>
         Profissionais certificados
       </div>
 
@@ -104,19 +124,23 @@
     <!-- Right: image -->
     <div class="hero-right">
       <div class="hero-img-box">
-        <img src="imagens/verygood.webp" alt="Equipe profissional Alfred Pintando as Cores" loading="eager"/>
-        <div class="hero-img-placeholder">
-          <div class="ph-icon"></div>
-          
-        </div>
+        <!--
+          loading="eager" + fetchpriority="high" = browser loads this first.
+          width/height prevent layout shift (CLS).
+          Use .webp for ~30% smaller files.
+        -->
+        <img src="imagens/verygood.webp"
+             alt="Equipe profissional Alfred Pintando as Cores"
+             width="600" height="500"
+             loading="eager"
+             fetchpriority="high"/>
       </div>
 
-      <!-- Floating stat cards -->
-      <div class="stat-float bl">
+      <div class="stat-float bl" aria-hidden="true">
         <div class="stat-num">+30</div>
         <div class="stat-lbl">anos de experiência</div>
       </div>
-      <div class="stat-float tr">
+      <div class="stat-float tr" aria-hidden="true">
         <div class="stat-num">+100</div>
         <div class="stat-lbl">obras concluídas</div>
       </div>
@@ -132,21 +156,13 @@
   <div class="container">
     <div class="about-grid">
 
-      <!-- Left: image -->
       <div class="about-img-box fade-up">
-        <!--
-          SUBSTITUA o src abaixo pela URL ou caminho da foto real.
-          Ex: src="imagens/equipe-alfred.jpg"
-        -->
-        <img src="imagens/famcut.webp" alt="Equipe Alfred Pintando as Cores" loading="lazy"/>
-        <div style="text-align:center; z-index:1; color:rgba(255,255,255,0.4); position:relative">
-          <div style="font-size:2.5rem"></div>
-          <p style="font-size:0.78rem; margin-top:0.5rem">
-          </p>
-        </div>
+        <img src="fam.png"
+             alt="Família Alfred Pintando as Cores — equipe unida"
+             width="600" height="430"
+             loading="lazy"/>
       </div>
 
-      <!-- Right: copy -->
       <div class="fade-up d1">
         <span class="s-tag">Quem somos</span>
         <h2 class="s-title">Uma família que acredita<br/>no poder da <em>transformação</em></h2>
@@ -222,19 +238,19 @@
       <div class="srv-card fade-up">
         <div class="srv-ico">🏠</div>
         <div class="srv-name">Pintura e Reforma</div>
-        <p class="srv-desc">Transformamos ambientes internos e externos com técnica, cuidado e tintas de alta durabilidade.</p>
+        <p class="srv-desc">Ambientes internos e externos com técnica, cuidado e tintas de alta durabilidade.</p>
       </div>
 
       <div class="srv-card fade-up d1">
         <div class="srv-ico">🏢</div>
         <div class="srv-name">Decoração</div>
-        <p class="srv-desc">Projetos para escritórios, lojas e condomínios com agilidade e mínima interferência na rotina.</p>
+        <p class="srv-desc">Projetos para escritórios, lojas e condomínios com agilidade e resultado elegante.</p>
       </div>
 
       <div class="srv-card fade-up d2">
-        <div class="srv-ico">🔨</div>
+        <div class="srv-ico">🪵</div>
         <div class="srv-name">Envernizamento</div>
-        <p class="srv-desc">Reforma completa de ambientes com foco em estética, funcionalidade e valorização do imóvel.</p>
+        <p class="srv-desc">Verniz de alta resistência para madeiras, portas e janelas, protegendo e valorizando.</p>
       </div>
 
       <div class="srv-card fade-up">
@@ -258,9 +274,10 @@
       <div class="srv-card fade-up">
         <div class="srv-ico">💎</div>
         <div class="srv-name">Efeitos Especiais</div>
-        <p class="srv-desc">que envolvem artes específicas solicitadas pelo cliente, seja uma decoração ou algo do tipo.
-          Também no formulário, onde está as opções que o cliente vai selecionar.</p>
+        <p class="srv-desc">Artes decorativas personalizadas — do efeito mármore a intervenções artísticas exclusivas.</p>
       </div>
+    </div>
+  </div>
 </section>
 
 
@@ -272,130 +289,122 @@
     <div class="fade-up">
       <span class="s-tag">Transformações reais</span>
       <h2 class="s-title">Antes &amp; <em>Depois</em></h2>
-      <p class="s-sub">
-        Cada projeto conta uma história de transformação. Veja alguns dos nossos trabalhos.
-      </p>
+      <p class="s-sub">Cada projeto conta uma história de transformação. Veja alguns dos nossos trabalhos.</p>
     </div>
 
     <div class="ba-slider">
       <div class="ba-controls fade-up d1">
-        <button type="button" class="ba-control" id="baPrev">Anterior</button>
-        <button type="button" class="ba-control" id="baNext">Ver mais</button>
+        <!--
+          baPrev = "Mostrar menos" (hidden initially)
+          baNext = "Ver mais"
+        -->
+        <button type="button" class="ba-control" id="baPrev" style="display:none">← Mostrar menos</button>
+        <button type="button" class="ba-control" id="baNext">Ver mais →</button>
       </div>
+
       <div class="ba-grid" id="baGrid">
 
-      <!-- Show only 2 images initially -->
-      <div class="ba-card fade-up">
-        <div class="ba-split">
-          <div class="ba-side ba-before">
-            <img src="imagens/antesEdepos1.1.jpg" alt="Antes" loading="lazy"/>
-            <span class="ba-lbl">ANTES</span>
-            <span class="ba-icon"></span>
-          </div>
-          <div class="ba-side ba-after">
-            <img src="imagens/antesEdepos1.2.jpg" alt="Depois" loading="lazy"/>
-            <span class="ba-lbl">DEPOIS</span>
-            <span class="ba-icon"></span>
+        <div class="ba-card fade-up">
+          <div class="ba-split">
+            <div class="ba-side ba-before">
+              <img src="imagens/antesEdepos1.1.webp" alt="Antes — projeto 1" loading="lazy" width="300" height="220"/>
+              <span class="ba-lbl">ANTES</span>
+            </div>
+            <div class="ba-side ba-after">
+              <img src="imagens/antesEdepos1.2.webp" alt="Depois — projeto 1" loading="lazy" width="300" height="220"/>
+              <span class="ba-lbl">DEPOIS</span>
+            </div>
           </div>
         </div>
-        <p class="ba-desc">...</p>
-      </div>
 
-      <div class="ba-card fade-up d1 hidden">
-        <div class="ba-split">
-          <div class="ba-side ba-before">
-            <img src="imagens/antesEdepos5.1.jpg" alt="Antes" loading="lazy"/>
-            <span class="ba-lbl">ANTES</span>
-            <span class="ba-icon"></span>
-          </div>
-          <div class="ba-side ba-after">
-            <img src="imagens/antesEdepos5.2.jpg" alt="Depois" loading="lazy"/>
-            <span class="ba-lbl">DEPOIS</span>
-            <span class="ba-icon"></span>
+        <div class="ba-card fade-up d1">
+          <div class="ba-split">
+            <div class="ba-side ba-before">
+              <img src="imagens/antesEdepos5.1.webp" alt="Antes — projeto 2" loading="lazy" width="300" height="220"/>
+              <span class="ba-lbl">ANTES</span>
+            </div>
+            <div class="ba-side ba-after">
+              <img src="imagens/antesEdepos5.2.webp" alt="Depois — projeto 2" loading="lazy" width="300" height="220"/>
+              <span class="ba-lbl">DEPOIS</span>
+            </div>
           </div>
         </div>
-        <p class="ba-desc">...</p>
-      </div>
 
-      <div class="ba-card fade-up d2">
-        <div class="ba-split">
-          <div class="ba-side ba-before">
-          
-            <img src="imagens/antesEdepos2.1.jpg" alt="Antes - textura" loading="lazy"/>
-            <span class="ba-lbl">ANTES</span>
-            <span class="ba-icon"></span>
-          </div>
-          <div class="ba-side ba-after">
-            <!-- src="imagens/depois-textura.jpg" -->
-            <img src="imagens/antesEdepos2.2.jpg" alt="Depois - textura" loading="lazy"/>
-            <span class="ba-lbl">DEPOIS</span>
-            <span class="ba-icon"></span>
+        <div class="ba-card fade-up d2">
+          <div class="ba-split">
+            <div class="ba-side ba-before">
+              <img src="imagens/antesEdepos2.1.webp" alt="Antes — projeto 3" loading="lazy" width="300" height="220"/>
+              <span class="ba-lbl">ANTES</span>
+            </div>
+            <div class="ba-side ba-after">
+              <img src="imagens/antesEdepos2.2.webp" alt="Depois — projeto 3" loading="lazy" width="300" height="220"/>
+              <span class="ba-lbl">DEPOIS</span>
+            </div>
           </div>
         </div>
-        <p class="ba-desc">...</p>
-      </div>
 
-      <div class="ba-card fade-up">
-        <div class="ba-split">
-          <div class="ba-side ba-before">
-            <img src="imagens/antesEdepos3.1.jpg" alt="Antes - projeto adicional" loading="lazy"/>
-            <span class="ba-lbl">ANTES</span>
-            <span class="ba-icon"></span>
-          </div>
-          <div class="ba-side ba-after">
-            <img src="imagens/antesEdepos3.2.jpg" alt="Depois - projeto adicional" loading="lazy"/>
-            <span class="ba-lbl">DEPOIS</span>
-            <span class="ba-icon"></span>
+        <div class="ba-card fade-up hidden">
+          <div class="ba-split">
+            <div class="ba-side ba-before">
+              <img src="imagens/antesEdepos3.1.webp" alt="Antes — projeto 4" loading="lazy" width="300" height="220"/>
+              <span class="ba-lbl">ANTES</span>
+            </div>
+            <div class="ba-side ba-after">
+              <img src="imagens/antesEdepos3.2.webp" alt="Depois — projeto 4" loading="lazy" width="300" height="220"/>
+              <span class="ba-lbl">DEPOIS</span>
+            </div>
           </div>
         </div>
-        <p class="ba-desc">...</p>
-      </div>
 
-      <div class="ba-card fade-up d1">
-        <div class="ba-split">
-          <div class="ba-side ba-before">
-            <img src="imagens/antesEdepos4.1.jpg" alt="Antes - fachada externa" loading="lazy"/>
-            <span class="ba-lbl">ANTES</span>
-            <span class="ba-icon"></span>
-          </div>
-          <div class="ba-side ba-after">
-            <img src="imagens/antesEdepos4.2.jpg" alt="Depois - fachada externa" loading="lazy"/>
-            <span class="ba-lbl">DEPOIS</span>
-            <span class="ba-icon"></span>
+        <div class="ba-card fade-up d1 hidden">
+          <div class="ba-split">
+            <div class="ba-side ba-before">
+              <img src="imagens/antesEdepos4.1.webp" alt="Antes — projeto 5" loading="lazy" width="300" height="220"/>
+              <span class="ba-lbl">ANTES</span>
+            </div>
+            <div class="ba-side ba-after">
+              <img src="imagens/antesEdepos4.2.webp" alt="Depois — projeto 5" loading="lazy" width="300" height="220"/>
+              <span class="ba-lbl">DEPOIS</span>
+            </div>
           </div>
         </div>
-        <p class="ba-desc">...</p>
-      </div>
 
-      <div class="ba-card fade-up d2">
-        <div class="ba-split">
-          <div class="ba-side ba-before">
-            <img src="imagens/antesEdepos6.1.jpg" alt="Antes - quarto" loading="lazy"/>
-            <span class="ba-lbl">ANTES</span>
-            <span class="ba-icon"></span>
-          </div>
-          <div class="ba-side ba-after">
-            <img src="imagens/antesEdepos6.2.jpg" alt="Depois - quarto" loading="lazy"/>
-            <span class="ba-lbl">DEPOIS</span>
-            <span class="ba-icon"></span>
+        <div class="ba-card fade-up d2 hidden">
+          <div class="ba-split">
+            <div class="ba-side ba-before">
+              <img src="imagens/antesEdepos6.1.webp" alt="Antes — projeto 6" loading="lazy" width="300" height="220"/>
+              <span class="ba-lbl">ANTES</span>
+            </div>
+            <div class="ba-side ba-after">
+              <img src="imagens/antesEdepos6.2.webp" alt="Depois — projeto 6" loading="lazy" width="300" height="220"/>
+              <span class="ba-lbl">DEPOIS</span>
+            </div>
           </div>
         </div>
-        <p class="ba-desc">...</p>
-      </div>
-      
-      <div class="ba-pagination" id="baPagination" aria-label="Navegação de slides"></div>
 
-    </div>
+    
+          <div class="ba-card fade-up d1 hidden">
+            <div class="ba-side ba-before">
+              <img src="imagens/6 Sem Título_20241129160614.webp" alt="Antes — projeto 7" loading="lazy" width="300" height="220"/>
+              <span class="ba-lbl"></span>
+            </div>
+            <div class="ba-side ba-after">
+              <img src="imagens/mamadoingthework.webp" alt="Depois — projeto 7" loading="lazy" width="300" height="220"/>
+              <span class="ba-lbl"></span>
+
+      </div><!-- /#baGrid -->
+    </div><!-- /.ba-slider -->
   </div>
 </section>
 
+<!-- Image Lightbox Modal -->
 <div id="imageModal" class="image-modal" aria-hidden="true">
   <div class="image-modal-backdrop" id="imageModalBackdrop"></div>
   <div class="image-modal-content" role="dialog" aria-modal="true" aria-labelledby="imageModalCaption">
     <button class="image-modal-close" id="imageModalClose" aria-label="Fechar imagem">×</button>
-    <button class="image-modal-nav image-modal-prev" id="imageModalPrev" aria-label="Imagem anterior">‹</button>
-    <button class="image-modal-nav image-modal-next" id="imageModalNext" aria-label="Próxima imagem">›</button>
-    <img src="" alt="" id="imageModalImg" loading="eager" />
+    <button class="image-modal-nav image-modal-prev" id="imageModalPrev" aria-label="Imagem anterior" style="display:none">‹</button>
+    <button class="image-modal-nav image-modal-next" id="imageModalNext" aria-label="Próxima imagem" style="display:none">›</button>
+    <img src="" alt="" id="imageModalImg" loading="eager"/>
     <p id="imageModalCaption"></p>
   </div>
 </div>
@@ -446,7 +455,10 @@
 
       <div class="why-visual fade-up d1">
         <div class="why-photo-box">
-          <img src="imagens/ele.jpg" alt="Membro da equipe Alfred Pintando as Cores" loading="lazy"/>
+          <img src="pai&filho.webp"
+               alt="Equipe Alfred Pintando as Cores"
+               width="480" height="600"
+               loading="lazy"/>
         </div>
       </div>
     </div>
@@ -465,17 +477,13 @@
     </div>
 
     <div class="tst-grid">
-
       <div class="tst-card fade-up">
-        <div class="tst-stars">★★★★★</div>
+        <div class="tst-stars" aria-label="5 estrelas">★★★★★</div>
         <p class="tst-txt">
-          <!-- [ADD CLIENT TESTIMONIAL HERE] -->
-          A pintura me chamou muita atenção pela beleza e pelo cuidado com que foi feita. Dá pra perceber que cada detalhe foi pensado com atenção e carinho, o que transmite dedicação e zelo do profissional. 
-          Esse cuidado torna a obra especial, porque além de bem realizada tecnicamente, ela passa uma sensação de calma e respeito pelo serviço. 
-          É uma pintura que não apenas agrada aos olhos, mas também toca pela forma cuidadosa como foi construída
+          A pintura me chamou atenção pela beleza e pelo cuidado com que foi feita. Cada detalhe foi pensado com atenção e carinho — passa uma sensação de calma e respeito pelo serviço.
         </p>
         <div class="tst-author">
-          <div class="tst-av">WC</div>
+          <div class="tst-av" aria-hidden="true">WC</div>
           <div>
             <div class="tst-name">Welma Carvalho</div>
             <div class="tst-city">João Pessoa — Pintura residencial</div>
@@ -484,14 +492,12 @@
       </div>
 
       <div class="tst-card fade-up d1">
-        <div class="tst-stars">★★★★★</div>
+        <div class="tst-stars" aria-label="5 estrelas">★★★★★</div>
         <p class="tst-txt">
-          <!-- [ADD CLIENT TESTIMONIAL HERE] -->
-          Trabalho de excelente qualidade com excelente tratamento com o cliente. 
-          Indico sem medo de errar! Excelência garantida!”
+          Trabalho de excelente qualidade com excelente tratamento com o cliente. Indico sem medo de errar! Excelência garantida!
         </p>
         <div class="tst-author">
-          <div class="tst-av">IS</div>
+          <div class="tst-av" aria-hidden="true">IS</div>
           <div>
             <div class="tst-name">Irani Sousa</div>
             <div class="tst-city">João Pessoa — Fachada comercial</div>
@@ -500,21 +506,18 @@
       </div>
 
       <div class="tst-card fade-up d2">
-        <div class="tst-stars">★★★★★</div>
+        <div class="tst-stars" aria-label="5 estrelas">★★★★★</div>
         <p class="tst-txt">
-          <!-- [ADD CLIENT TESTIMONIAL HERE] -->
-          Alfredo e equipe são excelentes profissionais, responsáveis e comprometidos. 
-          Todos da minha família contratam os serviços deles, estamos muitos satisfeitos, desejo muito sucesso🙌
+          Alfredo e equipe são excelentes profissionais, responsáveis e comprometidos. Toda a minha família contrata os serviços deles — estamos muito satisfeitos! 🙌
         </p>
         <div class="tst-author">
-          <div class="tst-av">DL</div>
+          <div class="tst-av" aria-hidden="true">DL</div>
           <div>
             <div class="tst-name">Dassayev Lunguinho</div>
-            <div class="tst-city"> João Pessoa — Textura decorativa</div>
+            <div class="tst-city">João Pessoa — Textura decorativa</div>
           </div>
         </div>
       </div>
-
     </div>
   </div>
 </section>
@@ -529,10 +532,8 @@
     <h2 class="s-title">Áreas <em>atendidas</em></h2>
     <div class="divider"></div>
     <p class="s-sub">
-      <!-- [ADD SERVICE AREAS HERE] -->
-      Atendemos as seguintes regiões e cidades — consulte-nos para confirmar disponibilidade:
+      Atendemos as seguintes regiões — consulte-nos para confirmar disponibilidade:
     </p>
-
     <div class="areas-wrap">
       <span class="area-pill">📍 [Cidade 1]</span>
       <span class="area-pill">📍 [Cidade 2]</span>
@@ -554,7 +555,6 @@
   <div class="container">
     <div class="contact-grid">
 
-    
       <div class="fade-up">
         <span class="s-tag">Fale conosco</span>
         <h2 class="s-title">Solicite seu <em>orçamento</em></h2>
@@ -566,7 +566,6 @@
         </p>
 
         <a href="https://wa.me/5583996956060" class="wa-btn" target="_blank" rel="noopener">
-          <!-- WhatsApp SVG icon -->
           <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
             <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
           </svg>
@@ -575,16 +574,15 @@
 
         <div class="reply-note">
           <span class="reply-dot"></span>
-          Resposta em até 1 hora • atendimento 24hrs, a depender da ordem de prioridade e disponibilidade.
+          Atendimento 24hrs, a depender da ordem de prioridade e disponibilidade.
         </div>
 
-        <!-- Payment & client info -->
         <div style="margin-top:1.8rem; padding-top:1.4rem; border-top:1px solid var(--border)">
           <p style="font-size:0.78rem; font-weight:700; color:var(--dark); text-transform:uppercase; letter-spacing:1px; margin-bottom:0.8rem">Pagamento</p>
           <div style="display:flex; gap:0.5rem; flex-wrap:wrap; margin-bottom:1.4rem">
-            <span style="background:var(--light); border:1px solid var(--border); border-radius:6px; padding:0.35rem 0.75rem; font-size:0.78rem; font-weight:600; color:var(--dark)">💳 Cartão</span>
-            <span style="background:var(--light); border:1px solid var(--border); border-radius:6px; padding:0.35rem 0.75rem; font-size:0.78rem; font-weight:600; color:var(--dark)">⚡ Pix</span>
-            <span style="background:var(--light); border:1px solid var(--border); border-radius:6px; padding:0.35rem 0.75rem; font-size:0.78rem; font-weight:600; color:var(--dark)">📄 Boleto</span>
+            <span style="background:var(--light); border:1px solid var(--border); border-radius:6px; padding:0.4rem 0.8rem; font-size:0.78rem; font-weight:600; color:var(--dark)">💳 Cartão</span>
+            <span style="background:var(--light); border:1px solid var(--border); border-radius:6px; padding:0.4rem 0.8rem; font-size:0.78rem; font-weight:600; color:var(--dark)">⚡ Pix</span>
+            <span style="background:var(--light); border:1px solid var(--border); border-radius:6px; padding:0.4rem 0.8rem; font-size:0.78rem; font-weight:600; color:var(--dark)">📄 Boleto</span>
           </div>
           <p style="font-size:0.78rem; font-weight:700; color:var(--dark); text-transform:uppercase; letter-spacing:1px; margin-bottom:0.6rem">Atendemos</p>
           <p style="font-size:0.8rem; color:var(--gray); line-height:1.6">Residências · Condomínios · Prédios · Escritórios · Escolas · Clínicas · Instituições</p>
@@ -601,7 +599,7 @@
             </div>
             <div class="form-group">
               <label for="telefone">WhatsApp *</label>
-              <input type="tel" id="telefone" name="telefone" placeholder="(xx) 9xxxx-xxxx" required autocomplete="tel"/>
+              <input type="tel" id="telefone" name="telefone" placeholder="(83) 9xxxx-xxxx" required autocomplete="tel"/>
             </div>
           </div>
 
@@ -615,7 +613,7 @@
               <option>Impermeabilização</option>
               <option>Textura e grafiato</option>
               <option>Cimento queimado</option>
-              <option>Efeito mármore</option>
+              <option>Efeito mármore / especial</option>
               <option>Envernizamento</option>
               <option>Pintura de fachada</option>
               <option>Outro</option>
@@ -627,7 +625,7 @@
             <textarea id="mensagem" name="mensagem" placeholder="Descreva seu projeto brevemente..."></textarea>
           </div>
 
-          <button type="submit" class="btn-submit">Enviar</button>
+          <button type="submit" class="btn-submit">Enviar pelo WhatsApp 💬</button>
         </form>
       </div>
 
@@ -642,11 +640,9 @@
 <section id="cta-final">
   <div class="container">
     <h2>Transforme seu ambiente com uma <u>pintura profissional</u></h2>
-    <p>Orçamento rápido, sem compromisso. Atendemos residências, escritórios e condomínios</p>
+    <p>Orçamento rápido, sem compromisso. Atendemos residências, escritórios e condomínios.</p>
     <div class="cta-btns">
-      <a href="https://wa.me/5583996956060" class="btn-wh" target="_blank" rel="noopener">
-        💬 Peça seu orçamento agora
-      </a>
+      <a href="https://wa.me/5583996956060" class="btn-wh" target="_blank" rel="noopener">💬 Peça seu orçamento agora</a>
       <a href="#contact" class="btn-ow">📋 Preencher formulário</a>
     </div>
   </div>
@@ -661,14 +657,11 @@
     <div class="footer-grid">
 
       <div class="ft-brand">
-        <span class="nav-logo">
-          <span class="logo-icon"></span>
+        <span class="nav-logo" style="margin-bottom:0.75rem">
+          <img src="imagens/Slogan Imagem 2.webp" alt="Logo Alfred Pintando as Cores" width="32" height="32" loading="lazy"/>
           Alfred <span>&nbsp;Pintando as Cores</span>
         </span>
-        <p>
-          Pintura, Reforma e Decoração com responsabilidade, segurança e compromisso.
-          Atendemos residências, condomínios, escritórios, escolas e clínicas.
-        </p>
+        <p>Pintura, Reforma e Decoração com responsabilidade, segurança e compromisso. Atendemos residências, condomínios, escritórios, escolas e clínicas.</p>
         <p style="margin-top:0.75rem; font-size:0.72rem; opacity:0.5">CNPJ: 55.942.739/0001-04</p>
       </div>
 
@@ -687,43 +680,40 @@
         <h4>Contato</h4>
         <ul class="ft-links">
           <li><a href="https://wa.me/5583996956060" target="_blank" rel="noopener">💬 (83) 99695-6060</a></li>
-         
           <li><a href="mailto:alfredpintandocores@gmail.com">📧 alfredpintandocores@gmail.com</a></li>
-          <li><a href="https://instagram.com/alfredpintandoascores" target="_blank" rel="noopener"> Instagram</a></li>
+          <li><a href="https://instagram.com/alfredpintandoascores" target="_blank" rel="noopener">📸 Instagram</a></li>
         </ul>
         <h4 style="margin-top:1.5rem">Pagamento</h4>
         <ul class="ft-links">
-          <li><span>💳 Cartão · ⚡ Pix · 📄 Boleto</span></li>
+          <li><span style="color:rgba(255,255,255,0.4); font-size:0.8rem">💳 Cartão &nbsp;·&nbsp; ⚡ Pix &nbsp;·&nbsp; 📄 Boleto</span></li>
         </ul>
       </div>
 
     </div>
 
     <div class="footer-bottom">
-      <span>© 2025 Alfred Pintando as Cores · CNPJ: 55.942.739/0001-04 · Todos os direitos reservados · Desenvolvido por TechSpace.</span>
+      <span>© 2025 Alfred Pintando as Cores · CNPJ: 55.942.739/0001-04 · Desenvolvido por TechSpace.</span>
       <span>Colorindo com responsabilidade 🩵</span>
     </div>
   </div>
 </footer>
 
 
-<!-- ======================================================
-     FLOATING WHATSAPP BUTTON
-     ====================================================== -->
+<!-- Floating WhatsApp -->
 <a href="https://wa.me/5583996956060"
    class="wa-float"
    target="_blank"
    rel="noopener"
    title="Fale no WhatsApp"
    aria-label="Fale conosco no WhatsApp">
-  <span class="wa-ring"></span>
+  <span class="wa-ring" aria-hidden="true"></span>
   <svg width="26" height="26" viewBox="0 0 24 24" fill="white" aria-hidden="true">
     <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
   </svg>
 </a>
 
-<!-- Scripts -->
-<script src="main.js"></script>
+<!-- defer = non-blocking; script runs after HTML is parsed -->
+<script src="main.js" defer></script>
 
 </body>
 </html>
