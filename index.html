@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <meta name="description" content="Alfred Pintando as Cores — Pintura, Reforma e Decoração. Orçamento com material incluso, visita técnica e parceria com outras áreas. CNPJ 55.942.739/0001-04. Fale no WhatsApp!"/>
   <meta name="keywords" content="pintura residencial, pintura comercial, pintor profissional, textura, impermeabilização, cimento queimado, efeito mármore, revestimento, Alfred Pintando as Cores"/>
@@ -9,6 +8,7 @@
   <meta property="og:description" content="Transforme seu ambiente com pintura profissional. Orçamento grátis!"/>
   <meta property="og:type" content="website"/>
   <meta name="theme-color" content="#1565C0"/>
+  <!-- Performance optimizations: Compress images to WebP format for faster loading -->
   <title>Alfred Pintando as Cores — Pintura & Reforma & Decoração</title>
 
   <!-- Fonts -->
@@ -25,8 +25,8 @@
      NAV
      ====================================================== -->
 <nav id="nav">
-  <a href="imagens/Slogan Imagem 2.png" class="nav-logo">
-    <img src="imagens/Slogan Imagem 2.png"/>
+  <a href="#top" class="nav-logo">
+    <img src="imagens/Slogan Imagem 2.webp"/>
     Alfred Pintando<span>&nbsp;as Cores</span>
   </a>
 
@@ -67,6 +67,7 @@
   <div class="hero-deco-1"></div>
   <div class="hero-deco-2"></div>
   <div class="hero-splash"></div>
+  <div class="hero-bg-photo" aria-hidden="true"></div>
 
   <div class="hero-grid">
     <!-- Left: copy -->
@@ -103,20 +104,16 @@
     <!-- Right: image -->
     <div class="hero-right">
       <div class="hero-img-box">
-        <!--
-          SUBSTITUA o src abaixo pela URL ou caminho da foto real.
-          Ex: src="imagens/hero-pintor.jpg"
-        -->
-        <img src="imagens/verygood.jpg" alt="imagens/verygood" loading="eager"/>
+        <img src="imagens/verygood.webp" alt="Equipe profissional Alfred Pintando as Cores" loading="eager"/>
         <div class="hero-img-placeholder">
-          <div class="ph-icon">🖌️</div>
+          <div class="ph-icon"></div>
           
         </div>
       </div>
 
       <!-- Floating stat cards -->
       <div class="stat-float bl">
-        <div class="stat-num">+10</div>
+        <div class="stat-num">+30</div>
         <div class="stat-lbl">anos de experiência</div>
       </div>
       <div class="stat-float tr">
@@ -141,7 +138,7 @@
           SUBSTITUA o src abaixo pela URL ou caminho da foto real.
           Ex: src="imagens/equipe-alfred.jpg"
         -->
-        <img src="imagens/famcut.jpg" alt="Equipe Alfred Pintando as Cores" loading="lazy"/>
+        <img src="imagens/famcut.webp" alt="Equipe Alfred Pintando as Cores" loading="lazy"/>
         <div style="text-align:center; z-index:1; color:rgba(255,255,255,0.4); position:relative">
           <div style="font-size:2.5rem"></div>
           <p style="font-size:0.78rem; margin-top:0.5rem">
@@ -260,8 +257,9 @@
 
       <div class="srv-card fade-up">
         <div class="srv-ico">💎</div>
-        <div class="srv-name">Efeito Mármore</div>
-        <p class="srv-desc">Acabamentos decorativos que imitam mármore e pedras nobres com perfeição e leveza.</p>
+        <div class="srv-name">Efeitos Especiais</div>
+        <p class="srv-desc">que envolvem artes específicas solicitadas pelo cliente, seja uma decoração ou algo do tipo.
+          Também no formulário, onde está as opções que o cliente vai selecionar.</p>
       </div>
 </section>
 
@@ -279,65 +277,128 @@
       </p>
     </div>
 
-    <div class="ba-grid">
+    <div class="ba-slider">
+      <div class="ba-controls fade-up d1">
+        <button type="button" class="ba-control" id="baPrev">Anterior</button>
+        <button type="button" class="ba-control" id="baNext">Ver mais</button>
+      </div>
+      <div class="ba-grid" id="baGrid">
 
+      <!-- Show only 2 images initially -->
       <div class="ba-card fade-up">
         <div class="ba-split">
           <div class="ba-side ba-before">
-            <!-- src="imagens/antes-sala.jpg" -->
-            <img src="antesEdepos1.1.jpg" alt="Antes - sala de estar" loading="lazy"/>
+            <img src="imagens/antesEdepos1.1.jpg" alt="Antes" loading="lazy"/>
             <span class="ba-lbl">ANTES</span>
             <span class="ba-icon"></span>
           </div>
           <div class="ba-side ba-after">
-            <!-- src="imagens/depois-sala.jpg" -->
-            <img src="antesEdepos1.2.jpg" alt="Depois - sala de estar" loading="lazy"/>
+            <img src="imagens/antesEdepos1.2.jpg" alt="Depois" loading="lazy"/>
             <span class="ba-lbl">DEPOIS</span>
             <span class="ba-icon"></span>
           </div>
         </div>
-        <p class="ba-desc">Sala de estar residencial — Substituir por foto real do projeto</p>
+        <p class="ba-desc">...</p>
       </div>
 
-      <div class="ba-card fade-up d1">
+      <div class="ba-card fade-up d1 hidden">
         <div class="ba-split">
           <div class="ba-side ba-before">
-            <!-- src="imagens/antes-fachada.jpg" -->
-            <img src="antesEdepos5.1.jpg" alt="Antes - fachada" loading="lazy"/>
+            <img src="imagens/antesEdepos5.1.jpg" alt="Antes" loading="lazy"/>
             <span class="ba-lbl">ANTES</span>
-            <span class="ba-icon">🏗️</span>
+            <span class="ba-icon"></span>
           </div>
           <div class="ba-side ba-after">
-            <!-- src="imagens/depois-fachada.jpg" -->
-            <img src="antesEdepos5.2.jpg" alt="Depois - fachada" loading="lazy"/>
+            <img src="imagens/antesEdepos5.2.jpg" alt="Depois" loading="lazy"/>
             <span class="ba-lbl">DEPOIS</span>
-            <span class="ba-icon">🏬</span>
+            <span class="ba-icon"></span>
           </div>
         </div>
-        <p class="ba-desc">Fachada comercial — Substituir por foto real do projeto</p>
+        <p class="ba-desc">...</p>
       </div>
 
       <div class="ba-card fade-up d2">
         <div class="ba-split">
           <div class="ba-side ba-before">
-            <!-- src="imagens/antes-textura.jpg" -->
-            <img src="" alt="Antes - textura" loading="lazy"/>
+          
+            <img src="imagens/antesEdepos2.1.jpg" alt="Antes - textura" loading="lazy"/>
             <span class="ba-lbl">ANTES</span>
-            <span class="ba-icon">🪣</span>
+            <span class="ba-icon"></span>
           </div>
           <div class="ba-side ba-after">
             <!-- src="imagens/depois-textura.jpg" -->
-            <img src="" alt="Depois - textura" loading="lazy"/>
+            <img src="imagens/antesEdepos2.2.jpg" alt="Depois - textura" loading="lazy"/>
             <span class="ba-lbl">DEPOIS</span>
-            <span class="ba-icon">✨</span>
+            <span class="ba-icon"></span>
           </div>
         </div>
-        <p class="ba-desc">Aplicação de textura premium — Substituir por foto real do projeto</p>
+        <p class="ba-desc">...</p>
       </div>
+
+      <div class="ba-card fade-up">
+        <div class="ba-split">
+          <div class="ba-side ba-before">
+            <img src="imagens/antesEdepos3.1.jpg" alt="Antes - projeto adicional" loading="lazy"/>
+            <span class="ba-lbl">ANTES</span>
+            <span class="ba-icon"></span>
+          </div>
+          <div class="ba-side ba-after">
+            <img src="imagens/antesEdepos3.2.jpg" alt="Depois - projeto adicional" loading="lazy"/>
+            <span class="ba-lbl">DEPOIS</span>
+            <span class="ba-icon"></span>
+          </div>
+        </div>
+        <p class="ba-desc">...</p>
+      </div>
+
+      <div class="ba-card fade-up d1">
+        <div class="ba-split">
+          <div class="ba-side ba-before">
+            <img src="imagens/antesEdepos4.1.jpg" alt="Antes - fachada externa" loading="lazy"/>
+            <span class="ba-lbl">ANTES</span>
+            <span class="ba-icon"></span>
+          </div>
+          <div class="ba-side ba-after">
+            <img src="imagens/antesEdepos4.2.jpg" alt="Depois - fachada externa" loading="lazy"/>
+            <span class="ba-lbl">DEPOIS</span>
+            <span class="ba-icon"></span>
+          </div>
+        </div>
+        <p class="ba-desc">...</p>
+      </div>
+
+      <div class="ba-card fade-up d2">
+        <div class="ba-split">
+          <div class="ba-side ba-before">
+            <img src="imagens/antesEdepos6.1.jpg" alt="Antes - quarto" loading="lazy"/>
+            <span class="ba-lbl">ANTES</span>
+            <span class="ba-icon"></span>
+          </div>
+          <div class="ba-side ba-after">
+            <img src="imagens/antesEdepos6.2.jpg" alt="Depois - quarto" loading="lazy"/>
+            <span class="ba-lbl">DEPOIS</span>
+            <span class="ba-icon"></span>
+          </div>
+        </div>
+        <p class="ba-desc">...</p>
+      </div>
+      
+      <div class="ba-pagination" id="baPagination" aria-label="Navegação de slides"></div>
 
     </div>
   </div>
 </section>
+
+<div id="imageModal" class="image-modal" aria-hidden="true">
+  <div class="image-modal-backdrop" id="imageModalBackdrop"></div>
+  <div class="image-modal-content" role="dialog" aria-modal="true" aria-labelledby="imageModalCaption">
+    <button class="image-modal-close" id="imageModalClose" aria-label="Fechar imagem">×</button>
+    <button class="image-modal-nav image-modal-prev" id="imageModalPrev" aria-label="Imagem anterior">‹</button>
+    <button class="image-modal-nav image-modal-next" id="imageModalNext" aria-label="Próxima imagem">›</button>
+    <img src="" alt="" id="imageModalImg" loading="eager" />
+    <p id="imageModalCaption"></p>
+  </div>
+</div>
 
 
 <!-- ======================================================
@@ -351,34 +412,42 @@
     </div>
 
     <div class="why-grid">
-      <div class="why-card fade-up">
-        <div class="why-ico">🔍</div>
-        <div class="why-ttl">Visita técnica gratuita</div>
-        <p class="why-dsc">Avaliamos o projeto presencialmente e também enviamos estimativas online</p>
+      <div class="why-cards">
+        <div class="why-card fade-up">
+          <div class="why-ico">🔍</div>
+          <div class="why-ttl">Visita técnica gratuita</div>
+          <p class="why-dsc">Avaliamos o projeto presencialmente e também enviamos estimativas online</p>
+        </div>
+
+        <div class="why-card fade-up d1">
+          <div class="why-ico">📋</div>
+          <div class="why-ttl">Orçamento com material</div>
+          <p class="why-dsc">Fornecemos orçamento completo já com o custo de materiais incluso</p>
+        </div>
+
+        <div class="why-card fade-up d2">
+          <div class="why-ico">💡</div>
+          <div class="why-ttl">Consultoria especializada</div>
+          <p class="why-dsc">Orientamos sobre os melhores materiais e serviços para cada situação</p>
+        </div>
+
+        <div class="why-card fade-up d1">
+          <div class="why-ico">🤝</div>
+          <div class="why-ttl">Parceiros em outras áreas</div>
+          <p class="why-dsc">Temos parcerias com pedreiros, eletricistas e outros profissionais</p>
+        </div>
+
+        <div class="why-card fade-up d2">
+          <div class="why-ico">💳</div>
+          <div class="why-ttl">Formas de pagamento</div>
+          <p class="why-dsc">Aceitamos Pix, cartão de crédito/débito e boleto bancário</p>
+        </div>
       </div>
 
-      <div class="why-card fade-up d1">
-        <div class="why-ico">📋</div>
-        <div class="why-ttl">Orçamento com material</div>
-        <p class="why-dsc">Fornecemos orçamento completo já com o custo de materiais incluso</p>
-      </div>
-
-      <div class="why-card fade-up d2">
-        <div class="why-ico">💡</div>
-        <div class="why-ttl">Consultoria especializada</div>
-        <p class="why-dsc">Orientamos sobre os melhores materiais e serviços para cada situação</p>
-      </div>
-
-      <div class="why-card fade-up d1">
-        <div class="why-ico">🤝</div>
-        <div class="why-ttl">Parceiros em outras áreas</div>
-        <p class="why-dsc">Temos parcerias com pedreiros, eletricistas e outros profissionais</p>
-      </div>
-
-      <div class="why-card fade-up d2">
-        <div class="why-ico">💳</div>
-        <div class="why-ttl">Formas de pagamento</div>
-        <p class="why-dsc">Aceitamos Pix, cartão de crédito/débito e boleto bancário</p>
+      <div class="why-visual fade-up d1">
+        <div class="why-photo-box">
+          <img src="imagens/ele.jpg" alt="Membro da equipe Alfred Pintando as Cores" loading="lazy"/>
+        </div>
       </div>
     </div>
   </div>
@@ -485,7 +554,7 @@
   <div class="container">
     <div class="contact-grid">
 
-      <!-- Left: WhatsApp CTA -->
+    
       <div class="fade-up">
         <span class="s-tag">Fale conosco</span>
         <h2 class="s-title">Solicite seu <em>orçamento</em></h2>
@@ -506,7 +575,7 @@
 
         <div class="reply-note">
           <span class="reply-dot"></span>
-          Resposta em até 1 hora • Seg–Sáb, 8h–18h
+          Resposta em até 1 hora • atendimento 24hrs, a depender da ordem de prioridade e disponibilidade.
         </div>
 
         <!-- Payment & client info -->
@@ -573,7 +642,7 @@
 <section id="cta-final">
   <div class="container">
     <h2>Transforme seu ambiente com uma <u>pintura profissional</u></h2>
-    <p>Orçamento rápido, sem compromisso. Atendemos residências, escritórios e condomínios.</p>
+    <p>Orçamento rápido, sem compromisso. Atendemos residências, escritórios e condomínios</p>
     <div class="cta-btns">
       <a href="https://wa.me/5583996956060" class="btn-wh" target="_blank" rel="noopener">
         💬 Peça seu orçamento agora
@@ -594,9 +663,6 @@
       <div class="ft-brand">
         <span class="nav-logo">
           <span class="logo-icon"></span>
-          <a href="imagens/Slogan Imagem 2.png" class="nav-logo-link">
-            <img src="imagens/Slogan Imagem 2.png" alt="Alfred Pintando as Cores">
-          </a>
           Alfred <span>&nbsp;Pintando as Cores</span>
         </span>
         <p>
@@ -621,7 +687,9 @@
         <h4>Contato</h4>
         <ul class="ft-links">
           <li><a href="https://wa.me/5583996956060" target="_blank" rel="noopener">💬 (83) 99695-6060</a></li>
-          <li><a href="https://instagram.com/alfredpintandoascores" target="_blank" rel="noopener"> alfredpintandoascores@techsbrasil.com</a></li>
+         
+          <li><a href="mailto:alfredpintandocores@gmail.com">📧 alfredpintandocores@gmail.com</a></li>
+          <li><a href="https://instagram.com/alfredpintandoascores" target="_blank" rel="noopener"> Instagram</a></li>
         </ul>
         <h4 style="margin-top:1.5rem">Pagamento</h4>
         <ul class="ft-links">
