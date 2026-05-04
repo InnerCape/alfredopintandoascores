@@ -4,32 +4,32 @@
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover"/>
   <meta name="description" content="Alfred Pintando as Cores — Pintura, Reforma e Decoração. Orçamento com material incluso, visita técnica e parceria com outras áreas. CNPJ 55.942.739/0001-04. Fale no WhatsApp!"/>
-  <meta name="keywords" content="pintura residencial, pintura comercial, pintor profissional, textura, impermeabilização, cimento queimado, revestimento, Alfred Pintando as Cores"/>
-  <meta property="og:title" content="Alfred Pintando as Cores — Pintura Profissional"/>
+  <meta name="keywords"    content="pintura residencial, pintura comercial, pintor profissional, textura, impermeabilização, cimento queimado, revestimento, Alfred Pintando as Cores"/>
+  <meta property="og:title"       content="Alfred Pintando as Cores — Pintura Profissional"/>
   <meta property="og:description" content="Transforme seu ambiente com pintura profissional. Orçamento grátis!"/>
-  <meta property="og:type" content="website"/>
-  <meta name="theme-color" content="#0A2F6E"/>
+  <meta property="og:type"        content="website"/>
+  <meta name="theme-color"        content="#0A2F6E"/>
 
   <title>Alfred Pintando as Cores | Pintura, reforma &amp; decoração</title>
 
-  <!-- Favicon -->
-<link rel="icon" href="logo.png" type="image/png">
-
   <!--
-    PERFORMANCE:
-    • preconnect → eliminates DNS/TLS for Google Fonts (saves ~200ms)
-    • preload critical CSS + above-fold images → removes render-blocking
-    • font-display:swap inside Google Fonts URL → no invisible text
+    FIX #2 — browser tab favicon.
+    Use the actual logo file name you have (logo.png, slogan-image.webp, etc.)
+    Both lines below handle different browser preferences.
   -->
+  <link rel="icon"       href="logo.png"          type="image/png"/>
+  <link rel="icon"       href="slogan-image.webp" type="image/webp"/>
+  <link rel="apple-touch-icon" href="logo.png"/>
+
+  <!-- Performance: preconnect + preload above-fold assets -->
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link rel="preload" as="image" href="imagens/verygood.webp"        type="image/webp"/>
+  <link rel="preload" as="image" href="slogan-image.webp"            type="image/webp"/>
 
-  <!-- Preload above-fold images (hero + logo) -->
-  <link rel="preload" as="image" href="imagens/verygood.webp" type="image/webp"/>
-  <link rel="preload" as="image" href="imagens/Slogan Imagem 2.webp" type="image/webp"/>
-
-  <!-- Non-blocking font load -->
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" media="print" onload="this.media='all'"/>
+  <!-- Non-blocking fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500;600&display=swap"
+        rel="stylesheet" media="print" onload="this.media='all'"/>
   <noscript>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet"/>
   </noscript>
@@ -38,13 +38,11 @@
 </head>
 <body>
 
-<!-- ======================================================
-     NAV
-     ====================================================== -->
+<!-- ═══════════════════ NAV ═══════════════════ -->
 <nav id="nav">
   <a href="#hero" class="nav-logo">
     <img src="slogan-image.webp"
-         alt="Alfred Pintando as Cores logo"
+         alt="Alfred Pintando as Cores"
          width="40" height="40"
          loading="eager" decoding="async"/>
     Alfred Pintando<span>&nbsp;as Cores</span>
@@ -67,7 +65,7 @@
   </button>
 </nav>
 
-<!-- Mobile Menu -->
+<!-- Mobile overlay menu -->
 <div class="mobile-menu" id="mobileMenu" role="dialog" aria-label="Menu de navegação">
   <a href="#about"        onclick="toggleMenu()">Sobre</a>
   <a href="#services"     onclick="toggleMenu()">Serviços</a>
@@ -80,17 +78,14 @@
 </div>
 
 
-<!-- ======================================================
-     HERO
-     ====================================================== -->
+<!-- ═══════════════════ HERO ═══════════════════ -->
 <section id="hero">
-  <div class="hero-deco-1" aria-hidden="true"></div>
-  <div class="hero-deco-2" aria-hidden="true"></div>
-  <div class="hero-splash" aria-hidden="true"></div>
+  <div class="hero-deco-1"  aria-hidden="true"></div>
+  <div class="hero-deco-2"  aria-hidden="true"></div>
+  <div class="hero-splash"  aria-hidden="true"></div>
   <div class="hero-bg-photo" aria-hidden="true"></div>
 
   <div class="hero-grid">
-    <!-- Left: copy -->
     <div class="hero-content">
       <div class="hero-live-badge">
         <span class="live-dot" aria-hidden="true"></span>
@@ -98,8 +93,7 @@
       </div>
 
       <h1 class="hero-title">
-        Cores que <em>transformam</em><br/>
-        ambientes e vidas.
+        Cores que <em>transformam</em><br/>ambientes e vidas.
       </h1>
 
       <p class="hero-sub">
@@ -121,21 +115,13 @@
       </div>
     </div>
 
-    <!-- Right: image -->
     <div class="hero-right">
       <div class="hero-img-box">
-        <!--
-          loading="eager" + fetchpriority="high" = browser loads this first.
-          width/height prevent layout shift (CLS).
-          Use .webp for ~30% smaller files.
-        -->
         <img src="imagens/verygood.webp"
              alt="Equipe profissional Alfred Pintando as Cores"
              width="600" height="500"
-             loading="eager"
-             fetchpriority="high"/>
+             loading="eager" fetchpriority="high"/>
       </div>
-
       <div class="stat-float bl" aria-hidden="true">
         <div class="stat-num">+30</div>
         <div class="stat-lbl">anos de experiência</div>
@@ -149,9 +135,7 @@
 </section>
 
 
-<!-- ======================================================
-     ABOUT
-     ====================================================== -->
+<!-- ═══════════════════ ABOUT ═══════════════════ -->
 <section id="about">
   <div class="container">
     <div class="about-grid">
@@ -174,7 +158,7 @@
           em cada projeto.
         </div>
 
-        <p style="color:var(--gray); font-size:0.88rem; line-height:1.75; margin-bottom:1.4rem">
+        <p style="color:var(--gray); font-size:.88rem; line-height:1.75; margin-bottom:1.4rem">
           Para nós, pintar vai muito além de aplicar cores nas paredes. É sobre cuidado, atenção aos detalhes
           e respeito com cada cliente. A empatia, a honestidade, a coragem e o compromisso fazem parte do nosso
           dia a dia — desde o primeiro contato até a entrega final.
@@ -211,7 +195,7 @@
           </li>
         </ul>
 
-        <p style="color:var(--gray); font-size:0.78rem; margin-top:1.2rem; opacity:0.7">
+        <p style="color:var(--gray); font-size:.78rem; margin-top:1.2rem; opacity:.7">
           CNPJ: 55.942.739/0001-04 &nbsp;·&nbsp; Colorindo com responsabilidade, segurança e compromisso.
         </p>
       </div>
@@ -220,17 +204,13 @@
 </section>
 
 
-<!-- ======================================================
-     SERVICES
-     ====================================================== -->
+<!-- ═══════════════════ SERVICES ═══════════════════ -->
 <section id="services">
   <div class="container">
     <div class="sec-hdr fade-up">
       <span class="s-tag">O que oferecemos</span>
       <h2 class="s-title">Nossos <em>Serviços</em></h2>
-      <p class="s-sub">
-        Estamos prontos para entender suas necessidades e oferecer soluções com qualidade e responsabilidade.
-      </p>
+      <p class="s-sub">Estamos prontos para entender suas necessidades e oferecer soluções com qualidade e responsabilidade.</p>
     </div>
 
     <div class="srv-grid">
@@ -239,37 +219,31 @@
         <div class="srv-name">Pintura e Reforma</div>
         <p class="srv-desc">Ambientes internos e externos com técnica, cuidado e tintas de alta durabilidade.</p>
       </div>
-
       <div class="srv-card fade-up d1">
         <div class="srv-ico">🏢</div>
         <div class="srv-name">Decoração</div>
         <p class="srv-desc">Projetos para escritórios, lojas e condomínios com agilidade e resultado elegante.</p>
       </div>
-
       <div class="srv-card fade-up d2">
         <div class="srv-ico">🪵</div>
         <div class="srv-name">Envernizamento</div>
         <p class="srv-desc">Verniz de alta resistência para madeiras, portas e janelas, protegendo e valorizando.</p>
       </div>
-
       <div class="srv-card fade-up">
         <div class="srv-ico">💧</div>
         <div class="srv-name">Impermeabilização</div>
-        <p class="srv-desc">Proteção eficaz contra umidade e infiltrações em lajes, terraços, fachadas e estruturas.</p>
+        <p class="srv-desc">Proteção eficaz contra umidade e infiltrações em lajes, terraços e fachadas.</p>
       </div>
-
       <div class="srv-card fade-up d1">
         <div class="srv-ico">✨</div>
         <div class="srv-name">Texturas</div>
         <p class="srv-desc">Técnicas modernas e clássicas para dar personalidade e elegância às suas paredes.</p>
       </div>
-
       <div class="srv-card fade-up d2">
         <div class="srv-ico">🪨</div>
         <div class="srv-name">Cimento Queimado</div>
-        <p class="srv-desc">Acabamento contemporâneo e sofisticado para pisos e paredes com efeito industrial único.</p>
+        <p class="srv-desc">Acabamento contemporâneo e sofisticado para pisos e paredes.</p>
       </div>
-
       <div class="srv-card fade-up">
         <div class="srv-ico">💎</div>
         <div class="srv-name">Efeitos Especiais</div>
@@ -280,9 +254,11 @@
 </section>
 
 
-<!-- ======================================================
-     BEFORE & AFTER
-     ====================================================== -->
+<!-- ═══════════════════ BEFORE & AFTER ═══════════════════ -->
+<!--
+  FIX #3: 4 cards visible by default (no .hidden class)
+           3 extra cards have .hidden — JS shows them on "Ver mais"
+-->
 <section id="gallery">
   <div class="container">
     <div class="fade-up">
@@ -293,126 +269,129 @@
 
     <div class="ba-slider">
       <div class="ba-controls fade-up d1">
-        <!--
-          
-        -->
         <button type="button" class="ba-control" id="baPrev" style="display:none">← Mostrar menos</button>
         <button type="button" class="ba-control" id="baNext">Ver mais →</button>
       </div>
 
       <div class="ba-grid" id="baGrid">
 
+        <!-- CARD 1 — visible by default -->
         <div class="ba-card fade-up">
           <div class="ba-split">
             <div class="ba-side ba-before">
-              <img src="imagens/antesEdepos1.1.webp" alt="Antes" loading="lazy" width="300" height="220"/>
+              <img src="imagens/antesEdepos1.1.webp" alt="Antes — projeto 1" loading="lazy" width="300" height="220"/>
               <span class="ba-lbl">ANTES</span>
             </div>
             <div class="ba-side ba-after">
-              <img src="imagens/antesEdepos1.2.webp" alt="Depois" loading="lazy" width="300" height="220"/>
+              <img src="imagens/antesEdepos1.2.webp" alt="Depois — projeto 1" loading="lazy" width="300" height="220"/>
               <span class="ba-lbl">DEPOIS</span>
             </div>
           </div>
         </div>
 
-        <div class="ba-card fade-up d1">
-          <div class="ba-split">
-            <div class="ba-side ba-before">
-              <img src="imagens/antesEdepos5.1.webp" alt="Antes" loading="lazy" width="300" height="220"/>
-              <span class="ba-lbl">ANTES</span>
-            </div>
-            <div class="ba-side ba-after">
-              <img src="imagens/antesEdepos5.2.webp" alt="Depois" loading="lazy" width="300" height="220"/>
-              <span class="ba-lbl">DEPOIS</span>
-            </div>
-          </div>
-        </div>
-
-        <div class="ba-card fade-up d2">
-          <div class="ba-split">
-            <div class="ba-side ba-before">
-              <img src="imagens/antesEdepos2.1.webp" alt="Antes" loading="lazy" width="300" height="220"/>
-              <span class="ba-lbl">ANTES</span>
-            </div>
-            <div class="ba-side ba-after">
-              <img src="imagens/antesEdepos2.2.webp" alt="Depois" loading="lazy" width="300" height="220"/>
-              <span class="ba-lbl">DEPOIS</span>
-            </div>
-          </div>
-        </div>
-
+        <!-- CARD 2 — visible by default -->
         <div class="ba-card fade-up hidden">
           <div class="ba-split">
             <div class="ba-side ba-before">
-              <img src="imagens/antesEdepos3.1.webp" alt="Antes" loading="lazy" width="300" height="220"/>
+              <img src="imagens/antesEdepos5.1.webp" alt="Antes — projeto 2" loading="lazy" width="300" height="220"/>
               <span class="ba-lbl">ANTES</span>
             </div>
             <div class="ba-side ba-after">
-              <img src="imagens/antesEdepos3.2.webp" alt="Depois" loading="lazy" width="300" height="220"/>
+              <img src="imagens/antesEdepos5.2.webp" alt="Depois — projeto 2" loading="lazy" width="300" height="220"/>
               <span class="ba-lbl">DEPOIS</span>
             </div>
           </div>
         </div>
 
+        <!-- CARD 3 — visible by default -->
+        <div class="ba-card fade-up hidden">
+          <div class="ba-split">
+            <div class="ba-side ba-before">
+              <img src="imagens/antesEdepos2.1.webp" alt="Antes — projeto 3" loading="lazy" width="300" height="220"/>
+              <span class="ba-lbl">ANTES</span>
+            </div>
+            <div class="ba-side ba-after">
+              <img src="imagens/antesEdepos2.2.webp" alt="Depois — projeto 3" loading="lazy" width="300" height="220"/>
+              <span class="ba-lbl">DEPOIS</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- CARD 4 — visible by default -->
+        <div class="ba-card fade-up hidden">
+          <div class="ba-split">
+            <div class="ba-side ba-before">
+              <img src="imagens/antesEdepos3.1.webp" alt="Antes — projeto 4" loading="lazy" width="300" height="220"/>
+              <span class="ba-lbl">ANTES</span>
+            </div>
+            <div class="ba-side ba-after">
+              <img src="imagens/antesEdepos3.2.webp" alt="Depois — projeto 4" loading="lazy" width="300" height="220"/>
+              <span class="ba-lbl">DEPOIS</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- CARD 5 — hidden, revealed by "Ver mais" -->
         <div class="ba-card fade-up d1 hidden">
           <div class="ba-split">
             <div class="ba-side ba-before">
-              <img src="imagens/antesEdepos4.1.webp" alt="Antes" loading="lazy" width="300" height="220"/>
+              <img src="imagens/antesEdepos4.1.webp" alt="Antes — projeto 5" loading="lazy" width="300" height="220"/>
               <span class="ba-lbl">ANTES</span>
             </div>
             <div class="ba-side ba-after">
-              <img src="imagens/antesEdepos4.2.webp" alt="Depois" loading="lazy" width="300" height="220"/>
+              <img src="imagens/antesEdepos4.2.webp" alt="Depois — projeto 5" loading="lazy" width="300" height="220"/>
               <span class="ba-lbl">DEPOIS</span>
             </div>
           </div>
         </div>
 
+        <!-- CARD 6 — hidden, revealed by "Ver mais" -->
         <div class="ba-card fade-up d2 hidden">
           <div class="ba-split">
             <div class="ba-side ba-before">
-              <img src="imagens/antesEdepos6.1.webp" alt="Antes" loading="lazy" width="300" height="220"/>
+              <img src="imagens/antesEdepos6.1.webp" alt="Antes — projeto 6" loading="lazy" width="300" height="220"/>
               <span class="ba-lbl">ANTES</span>
             </div>
             <div class="ba-side ba-after">
-              <img src="imagens/antesEdepos6.2.webp" alt="Depois" loading="lazy" width="300" height="220"/>
+              <img src="imagens/antesEdepos6.2.webp" alt="Depois — projeto 6" loading="lazy" width="300" height="220"/>
               <span class="ba-lbl">DEPOIS</span>
             </div>
           </div>
         </div>
 
-    
-          <div class="ba-card fade-up d1 hidden">
+        <!-- CARD 7 — hidden, revealed by "Ver mais" -->
+        <div class="ba-card fade-up hidden">
+          <div class="ba-split">
             <div class="ba-side ba-before">
-              <img src="imagens/6 Sem Título_20241129160614.webp" alt="..." loading="lazy" width="300" height="220"/>
+              <img src="imagens/6 Sem Título_20241129160614.webp" alt="Antes — projeto 7" loading="lazy" width="300" height="220"/>
               <span class="ba-lbl">ANTES</span>
             </div>
             <div class="ba-side ba-after">
-              <img src="imagens/mamadoingthework.webp" alt="..." loading="lazy" width="300" height="220"/>
+              <img src="imagens/mamadoingthework.webp" alt="Depois — projeto 7" loading="lazy" width="300" height="220"/>
               <span class="ba-lbl">DEPOIS</span>
             </div>
           </div>
         </div>
+
       </div><!-- /#baGrid -->
     </div><!-- /.ba-slider -->
   </div>
 </section>
 
-<!-- Image Lightbox Modal -->
+<!-- Lightbox Modal -->
 <div id="imageModal" class="image-modal" aria-hidden="true">
   <div class="image-modal-backdrop" id="imageModalBackdrop"></div>
   <div class="image-modal-content" role="dialog" aria-modal="true" aria-labelledby="imageModalCaption">
     <button class="image-modal-close" id="imageModalClose" aria-label="Fechar imagem">×</button>
     <button class="image-modal-nav image-modal-prev" id="imageModalPrev" aria-label="Imagem anterior" style="display:none">‹</button>
-    <button class="image-modal-nav image-modal-next" id="imageModalNext" aria-label="Próxima imagem" style="display:none">›</button>
+    <button class="image-modal-nav image-modal-next" id="imageModalNext" aria-label="Próxima imagem"  style="display:none">›</button>
     <img src="" alt="" id="imageModalImg" loading="eager"/>
     <p id="imageModalCaption"></p>
   </div>
 </div>
 
 
-<!-- ======================================================
-     WHY US
-     ====================================================== -->
+<!-- ═══════════════════ WHY US ═══════════════════ -->
 <section id="why">
   <div class="container">
     <div class="fade-up" style="text-align:center">
@@ -427,25 +406,21 @@
           <div class="why-ttl">Visita técnica gratuita</div>
           <p class="why-dsc">Avaliamos o projeto presencialmente e também enviamos estimativas online</p>
         </div>
-
         <div class="why-card fade-up d1">
           <div class="why-ico">📋</div>
           <div class="why-ttl">Orçamento com material</div>
           <p class="why-dsc">Fornecemos orçamento completo já com o custo de materiais incluso</p>
         </div>
-
         <div class="why-card fade-up d2">
           <div class="why-ico">💡</div>
           <div class="why-ttl">Consultoria especializada</div>
           <p class="why-dsc">Orientamos sobre os melhores materiais e serviços para cada situação</p>
         </div>
-
         <div class="why-card fade-up d1">
           <div class="why-ico">🤝</div>
           <div class="why-ttl">Parceiros em outras áreas</div>
           <p class="why-dsc">Temos parcerias com pedreiros, eletricistas e outros profissionais</p>
         </div>
-
         <div class="why-card fade-up d2">
           <div class="why-ico">💳</div>
           <div class="why-ttl">Formas de pagamento</div>
@@ -466,9 +441,7 @@
 </section>
 
 
-<!-- ======================================================
-     TESTIMONIALS
-     ====================================================== -->
+<!-- ═══════════════════ TESTIMONIALS ═══════════════════ -->
 <section id="testimonials">
   <div class="container">
     <div class="fade-up" style="text-align:center; margin-bottom:2.5rem">
@@ -480,7 +453,7 @@
       <div class="tst-card fade-up">
         <div class="tst-stars" aria-label="5 estrelas">★★★★★</div>
         <p class="tst-txt">
-          A pintura me chamou atenção pela beleza e pelo cuidado com que foi feita. Cada detalhe foi pensado com atenção e carinho — passa uma sensação de calma e respeito pelo serviço.
+          A pintura me chamou atenção pela beleza e pelo cuidado com que foi feita. Cada detalhe foi pensado com carinho — passa uma sensação de calma e respeito pelo serviço.
         </p>
         <div class="tst-author">
           <div class="tst-av" aria-hidden="true">WC</div>
@@ -523,17 +496,13 @@
 </section>
 
 
-<!-- ======================================================
-     AREAS
-     ====================================================== -->
+<!-- ═══════════════════ AREAS ═══════════════════ -->
 <section id="areas">
   <div class="container">
     <span class="s-tag">Cobertura</span>
     <h2 class="s-title">Áreas <em>atendidas</em></h2>
     <div class="divider"></div>
-    <p class="s-sub">
-      Atendemos as seguintes regiões — consulte-nos para confirmar disponibilidade:
-    </p>
+    <p class="s-sub">Atendemos as seguintes regiões — consulte-nos para confirmar disponibilidade:</p>
     <div class="areas-wrap">
       <span class="area-pill">📍 [Cidade 1]</span>
       <span class="area-pill">📍 [Cidade 2]</span>
@@ -548,9 +517,7 @@
 </section>
 
 
-<!-- ======================================================
-     CONTACT
-     ====================================================== -->
+<!-- ═══════════════════ CONTACT ═══════════════════ -->
 <section id="contact">
   <div class="container">
     <div class="contact-grid">
@@ -559,8 +526,7 @@
         <span class="s-tag">Fale conosco</span>
         <h2 class="s-title">Solicite seu <em>orçamento</em></h2>
         <div class="divider"></div>
-
-        <p style="color:var(--gray); font-size:0.9rem; line-height:1.7; margin-bottom:1.5rem">
+        <p style="color:var(--gray); font-size:.9rem; line-height:1.7; margin-bottom:1.5rem">
           Respondemos em minutos! Faça seu orçamento sem compromisso —
           presencialmente com visita técnica ou online mesmo.
         </p>
@@ -578,20 +544,19 @@
         </div>
 
         <div style="margin-top:1.8rem; padding-top:1.4rem; border-top:1px solid var(--border)">
-          <p style="font-size:0.78rem; font-weight:700; color:var(--dark); text-transform:uppercase; letter-spacing:1px; margin-bottom:0.8rem">Pagamento</p>
-          <div style="display:flex; gap:0.5rem; flex-wrap:wrap; margin-bottom:1.4rem">
-            <span style="background:var(--light); border:1px solid var(--border); border-radius:6px; padding:0.4rem 0.8rem; font-size:0.78rem; font-weight:600; color:var(--dark)">💳 Cartão</span>
-            <span style="background:var(--light); border:1px solid var(--border); border-radius:6px; padding:0.4rem 0.8rem; font-size:0.78rem; font-weight:600; color:var(--dark)">⚡ Pix</span>
-            <span style="background:var(--light); border:1px solid var(--border); border-radius:6px; padding:0.4rem 0.8rem; font-size:0.78rem; font-weight:600; color:var(--dark)">📄 Boleto</span>
+          <p style="font-size:.78rem; font-weight:700; color:var(--dark); text-transform:uppercase; letter-spacing:1px; margin-bottom:.8rem">Pagamento</p>
+          <div style="display:flex; gap:.5rem; flex-wrap:wrap; margin-bottom:1.4rem">
+            <span style="background:var(--light); border:1px solid var(--border); border-radius:6px; padding:.4rem .8rem; font-size:.78rem; font-weight:600; color:var(--dark)">💳 Cartão</span>
+            <span style="background:var(--light); border:1px solid var(--border); border-radius:6px; padding:.4rem .8rem; font-size:.78rem; font-weight:600; color:var(--dark)">⚡ Pix</span>
+            <span style="background:var(--light); border:1px solid var(--border); border-radius:6px; padding:.4rem .8rem; font-size:.78rem; font-weight:600; color:var(--dark)">📄 Boleto</span>
           </div>
-          <p style="font-size:0.78rem; font-weight:700; color:var(--dark); text-transform:uppercase; letter-spacing:1px; margin-bottom:0.6rem">Atendemos</p>
-          <p style="font-size:0.8rem; color:var(--gray); line-height:1.6">Residências · Condomínios · Prédios · Escritórios · Escolas · Clínicas · Instituições</p>
+          <p style="font-size:.78rem; font-weight:700; color:var(--dark); text-transform:uppercase; letter-spacing:1px; margin-bottom:.6rem">Atendemos</p>
+          <p style="font-size:.8rem; color:var(--gray); line-height:1.6">Residências · Condomínios · Prédios · Escritórios · Escolas · Clínicas · Instituições</p>
         </div>
       </div>
 
-      <!-- Right: form -->
       <div class="contact-form fade-up d1">
-        <form id="contactForm" onsubmit="handleForm(event)" novalidate>
+        <form id="contactForm" action="https://formspree.io/f/xvzlknad" method="POST" onsubmit="handleForm(event)" novalidate>
           <div class="form-row">
             <div class="form-group">
               <label for="nome">Nome completo *</label>
@@ -622,11 +587,8 @@
 
           <div class="form-group">
             <label for="mensagem">Mensagem</label>
-            <textarea id="mensagem" name="mensagem" placeholder="Descreva seu projeto brevemente..."></textarea>
-          </div>
-
-          <button type="submit" class="btn-submit">Enviar pelo WhatsApp 💬</button>
-        </form>
+            <textarea id="mensagem" name="mensagem" placeholder="Descreva seu projeto brevemente..."></textarea>         </div>      <input type="hidden" name="_subject" value="Novo orçamento - Alfred Pintando as Cores" />       
+            <button type="submit" class="btn-submit">Enviar 💬</button>       </form>
       </div>
 
     </div>
@@ -634,9 +596,7 @@
 </section>
 
 
-<!-- ======================================================
-     FINAL CTA
-     ====================================================== -->
+<!-- ═══════════════════ FINAL CTA ═══════════════════ -->
 <section id="cta-final">
   <div class="container">
     <h2>Transforme seu ambiente com uma <u>pintura profissional</u></h2>
@@ -649,20 +609,18 @@
 </section>
 
 
-<!-- ======================================================
-     FOOTER
-     ====================================================== -->
+<!-- ═══════════════════ FOOTER ═══════════════════ -->
 <footer>
   <div class="footer-inner">
     <div class="footer-grid">
 
       <div class="ft-brand">
-        <span class="nav-logo" style="margin-bottom:0.75rem">
-          <img src="slogan-image.webp" alt="Logo Alfred Pintando as Cores" width="32" height="32" loading="lazy"/>
+        <span class="nav-logo" style="margin-bottom:.75rem">
+          <img src="slogan-image.webp" alt="Logo Alfred Pintando as Cores" width="36" height="36" loading="lazy"/>
           Alfred <span>&nbsp;Pintando as Cores</span>
         </span>
         <p>Pintura, Reforma e Decoração com responsabilidade, segurança e compromisso. Atendemos residências, condomínios, escritórios, escolas e clínicas.</p>
-        <p style="margin-top:0.75rem; font-size:0.72rem; opacity:0.5">CNPJ: 55.942.739/0001-04</p>
+        <p style="margin-top:.75rem; font-size:.72rem; opacity:.5">CNPJ: 55.942.739/0001-04</p>
       </div>
 
       <div class="ft-col">
@@ -685,7 +643,7 @@
         </ul>
         <h4 style="margin-top:1.5rem">Pagamento</h4>
         <ul class="ft-links">
-          <li><span style="color:rgba(255,255,255,0.4); font-size:0.8rem">💳 Cartão &nbsp;·&nbsp; ⚡ Pix &nbsp;·&nbsp; 📄 Boleto</span></li>
+          <li><span style="color:rgba(255,255,255,.4); font-size:.8rem">💳 Cartão &nbsp;·&nbsp; ⚡ Pix &nbsp;·&nbsp; 📄 Boleto</span></li>
         </ul>
       </div>
 
@@ -700,20 +658,66 @@
 
 
 <!-- Floating WhatsApp -->
-<a href="https://wa.me/5583996956060"
-   class="wa-float"
-   target="_blank"
-   rel="noopener"
-   title="Fale no WhatsApp"
-   aria-label="Fale conosco no WhatsApp">
+<a href="https://wa.me/5583996956060" class="wa-float" target="_blank" rel="noopener"
+   title="Fale no WhatsApp" aria-label="Fale conosco no WhatsApp">
   <span class="wa-ring" aria-hidden="true"></span>
   <svg width="26" height="26" viewBox="0 0 24 24" fill="white" aria-hidden="true">
     <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
   </svg>
 </a>
+<script>
+function handleForm(event) {
+  event.preventDefault();
 
-<!-- defer = non-blocking; script runs after HTML is parsed -->
+  const form = document.getElementById("contactForm");
+  const nome = document.getElementById("nome");
+  const telefone = document.getElementById("telefone");
+
+  // Simple validation
+  if (!nome.value.trim()) {
+    alert("Por favor, insira seu nome.");
+    nome.focus();
+    return;
+  }
+
+  if (!telefone.value.trim()) {
+    alert("Por favor, insira seu WhatsApp.");
+    telefone.focus();
+    return;
+  }
+
+  // Submit to Formspree using fetch
+  fetch(form.action, {
+    method: form.method,
+    body: new FormData(form),
+    headers: {
+      'Accept': 'application/json'
+    }
+  })
+  .then(response => {
+    if (response.ok) {
+      form.reset();
+      showPopup();
+    } else {
+      alert("Erro ao enviar. Tente novamente.");
+    }
+  })
+  .catch(() => {
+    alert("Erro de conexão. Tente novamente.");
+  });
+}
+
+// Show popup
+function showPopup() {
+  const popup = document.getElementById("successPopup");
+  popup.style.display = "flex";
+}
+
+// Close popup
+document.getElementById("closePopup").addEventListener("click", function () {
+  document.getElementById("successPopup").style.display = "none";
+});
+</script>
 <script src="main.js" defer></script>
-
 </body>
 </html>

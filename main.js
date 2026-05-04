@@ -1,232 +1,291 @@
 /* ================================================
-   ALFRED PINTANDO AS CORES — main.js
+   ALFRED PINTANDO AS CORES — main.js (fixed)
    ================================================ */
 
-/* ── 1. Mobile Menu Toggle ── */
+/* ── overflow lock counter (prevents menu/modal race) ── */
+let _overflowLocks = 0;
+function lockScroll()   { if (++_overflowLocks === 1) document.body.style.overflow = 'hidden'; }
+function unlockScroll() { if (--_overflowLocks <= 0) { _overflowLocks = 0; document.body.style.overflow = ''; } }
+
+/* ── 1. Mobile Menu ── */
 function toggleMenu() {
   const menu = document.getElementById('mobileMenu');
-  menu.classList.toggle('open');
-  document.body.style.overflow = menu.classList.contains('open') ? 'hidden' : '';
+  if (!menu) return;
+  const isOpen = menu.classList.toggle('open');
+  isOpen ? lockScroll() : unlockScroll();
 }
 
-/* ── 2. Sticky Nav Shrink on Scroll ── */
-window.addEventListener('scroll', () => {
-  document.getElementById('nav').classList.toggle('scrolled', window.scrollY > 60);
-}, { passive: true });
+/* close menu on outside click */
+document.addEventListener('click', e => {
+  const menu = document.getElementById('mobileMenu');
+  const burger = document.querySelector('[onclick="toggleMenu()"]');
+  if (menu?.classList.contains('open') && !menu.contains(e.target) && !burger?.contains(e.target)) {
+    menu.classList.remove('open');
+    unlockScroll();
+  }
+});
 
-/* ── 3. Scroll Reveal (Intersection Observer) ── */
-const revealObs = new IntersectionObserver(entries => {
-  entries.forEach(e => {
-    if (e.isIntersecting) {
-      e.target.classList.add('visible');
-      revealObs.unobserve(e.target);
-      
-      // Lazy init gallery slider
-      if (!baSlider.initialized && e.target.id === 'gallery') {
-        baSlider.grid = document.getElementById('baGrid');
-        if (baSlider.grid) {
-          baSlider.cards = Array.from(baSlider.grid.querySelectorAll('.ba-card'));
-          baSlider.prev = document.getElementById('baPrev');
-          baSlider.next = document.getElementById('baNext');
-          baSlider.pagination = document.getElementById('baPagination');
-          baSlider.initialized = true;
-          
-          if (baSlider.prev) baSlider.prev.addEventListener('click', () => changeBaSlide(-1));
-          if (baSlider.next) baSlider.next.addEventListener('click', () => {
-            // Show all hidden cards on "Ver mais"
-            baSlider.cards.forEach(card => card.classList.remove('hidden'));
-            baSlider.next.style.display = 'none'; // Hide the button after showing all
-            if (baSlider.pagination) baSlider.pagination.style.display = 'none';
-          });
-          window.addEventListener('resize', renderBaSlides, { passive: true });
-          renderBaSlides();
-        }
-      }
+/* close menu when a nav link is clicked */
+document.querySelectorAll('#mobileMenu a').forEach(a => {
+  a.addEventListener('click', () => {
+    const menu = document.getElementById('mobileMenu');
+    if (menu?.classList.contains('open')) {
+      menu.classList.remove('open');
+      unlockScroll();
     }
   });
-}, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+});
+
+/* ── 2. Nav shrink on scroll ── */
+window.addEventListener('scroll', () => {
+  const nav = document.getElementById('nav');
+  if (nav) nav.classList.toggle('scrolled', window.scrollY > 60);
+}, { passive: true });
+
+/* ── 3. Scroll reveal ── */
+const revealObs = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) { e.target.classList.add('visible'); revealObs.unobserve(e.target); }
+  });
+}, { threshold: 0.08, rootMargin: '0px 0px -30px 0px' });
 
 document.querySelectorAll('.fade-up').forEach(el => revealObs.observe(el));
 
-/* ── 4. Smooth Scroll for all anchor links ── */
+/* ── 4. Smooth scroll (nav-height aware) ── */
 document.querySelectorAll('a[href^="#"]').forEach(a => {
   a.addEventListener('click', e => {
-    const target = document.querySelector(a.getAttribute('href'));
+    const id = a.getAttribute('href');
+    if (!id || id === '#') return;
+    const target = document.querySelector(id);
     if (target) {
       e.preventDefault();
-      target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      const navH = document.getElementById('nav')?.offsetHeight || 68;
+      const top = target.getBoundingClientRect().top + window.scrollY - navH;
+      window.scrollTo({ top, behavior: 'smooth' });
     }
   });
 });
 
-/* ===== BEFORE & AFTER SLIDER ===== */
-let baSlider = {
-  grid: null,
-  cards: [],
-  prev: null,
-  next: null,
-  pagination: null,
-  pageIndex: 0,
-  initialized: false
-};
+/* ══ GALLERY ══ */
+(function initGallery() {
+  const grid    = document.getElementById('baGrid');
+  const btnMore = document.getElementById('baNext');
+  const btnLess = document.getElementById('baPrev');
+  if (!grid || !btnMore) return;
 
-function getBaItemsPerPage() {
-  return window.matchMedia('(max-width: 900px)').matches ? 1 : 2;
-}
+  const SHOW_DEFAULT = 2; /* FIX: was 2*/
+  const cards = Array.from(grid.querySelectorAll('.ba-card'));
 
-function renderBaSlides() {
-  if (!baSlider.cards.length || !baSlider.pagination) return;
-  const perPage = getBaItemsPerPage();
-  const pages = Math.max(1, Math.ceil(baCards.length / perPage));
-  baSlider.pageIndex = Math.min(Math.max(baSlider.pageIndex, 0), pages - 1);
+  function collapse() {
+    cards.forEach((c, i) => c.classList.toggle('hidden', i >= SHOW_DEFAULT));
+    btnMore.style.display = cards.length > SHOW_DEFAULT ? '' : 'none';
+    if (btnLess) btnLess.style.display = 'none';
+  }
 
-  baSlider.cards.forEach((card, index) => {
-    const page = Math.floor(index / perPage);
-    card.classList.toggle('hidden', page !== baPageIndex);
-  });
-
-  baPagination.innerHTML = '';
-  for (let i = 0; i < pages; i += 1) {
-    const dot = document.createElement('button');
-    dot.type = 'button';
-    dot.className = i === baPageIndex ? 'active' : '';
-    dot.addEventListener('click', () => {
-      baPageIndex = i;
-      renderBaSlides();
+  function expandAll() {
+    cards.forEach(c => {
+      c.classList.remove('hidden');
+      if (!c.classList.contains('visible')) revealObs.observe(c);
     });
-    baPagination.appendChild(dot);
+    btnMore.style.display = 'none';
+    if (btnLess) btnLess.style.display = '';
+    attachLightboxClicks();
   }
 
-  if (baPrev) baPrev.disabled = baPageIndex === 0;
-  if (baNext) baNext.disabled = baPageIndex === pages - 1;
-}
-
-function changeBaSlide(direction) {
-  const perPage = getBaItemsPerPage();
-  const pages = Math.max(1, Math.ceil(baCards.length / perPage));
-  baPageIndex = Math.min(Math.max(baPageIndex + direction, 0), pages - 1);
-  renderBaSlides();
-}
-
-/* Lazy init moved to revealObs for gallery section */
-
-/* ===== BEFORE & AFTER IMAGE MODAL ===== */
-const imageModal = document.getElementById('imageModal');
-const imageModalImg = document.getElementById('imageModalImg');
-const imageModalCaption = document.getElementById('imageModalCaption');
-const imageModalClose = document.getElementById('imageModalClose');
-const imageModalBackdrop = document.getElementById('imageModalBackdrop');
-const imageModalPrev = document.getElementById('imageModalPrev');
-const imageModalNext = document.getElementById('imageModalNext');
-
-let currentImageIndex = -1;
-let allImages = [];
-
-function collectImages() {
-  allImages = Array.from(document.querySelectorAll('.ba-side img'));
-}
-
-function openImageModal(index) {
-  if (!imageModal || !imageModalImg || !imageModalCaption || index < 0 || index >= allImages.length) return;
-  currentImageIndex = index;
-  const img = allImages[index];
-  imageModalImg.src = img.src;
-  imageModalImg.alt = img.alt;
-  imageModalCaption.textContent = img.alt || 'Imagem ampliada';
-  imageModal.classList.add('open');
-  document.body.style.overflow = 'hidden';
-  updateNavButtons();
-}
-
-function closeImageModal() {
-  if (!imageModal) return;
-  imageModal.classList.remove('open');
-  document.body.style.overflow = '';
-  currentImageIndex = -1;
-}
-
-function updateNavButtons() {
-  if (!imageModalPrev || !imageModalNext) return;
-  imageModalPrev.style.display = currentImageIndex > 0 ? 'flex' : 'none';
-  imageModalNext.style.display = currentImageIndex < allImages.length - 1 ? 'flex' : 'none';
-}
-
-function showPrevImage() {
-  if (currentImageIndex > 0) {
-    openImageModal(currentImageIndex - 1);
+  collapse();
+  btnMore.addEventListener('click', expandAll);
+  if (btnLess) {
+    btnLess.addEventListener('click', () => {
+      collapse();
+      const gallery = document.getElementById('gallery');
+      if (gallery) {
+        const navH = document.getElementById('nav')?.offsetHeight || 68;
+        window.scrollTo({ top: gallery.offsetTop - navH, behavior: 'smooth' });
+      }
+    });
   }
+})();
+
+/* ══ LIGHTBOX ══ */
+let _allImgs    = [];
+let _currentIdx = -1;
+
+function buildImgList() {
+  _allImgs = Array.from(document.querySelectorAll('.ba-card:not(.hidden) .ba-side img'));
 }
 
-function showNextImage() {
-  if (currentImageIndex < allImages.length - 1) {
-    openImageModal(currentImageIndex + 1);
-  }
+function openModal(idx) {
+  buildImgList();
+  const modal    = document.getElementById('imageModal');
+  const modalImg = document.getElementById('imageModalImg');
+  const caption  = document.getElementById('imageModalCaption');
+  if (!modal || !modalImg || idx < 0 || idx >= _allImgs.length) return;
+  _currentIdx = idx;
+  modalImg.src = _allImgs[idx].src;
+  modalImg.alt = _allImgs[idx].alt;
+  if (caption) caption.textContent = _allImgs[idx].alt || '';
+  modal.classList.add('open');
+  modal.setAttribute('aria-hidden', 'false');
+  lockScroll();
+  updateModalNav();
 }
 
-collectImages();
+function closeModal() {
+  const modal    = document.getElementById('imageModal');
+  const modalImg = document.getElementById('imageModalImg');
+  if (!modal) return;
+  modal.classList.remove('open');
+  modal.setAttribute('aria-hidden', 'true');
+  unlockScroll();
+  _currentIdx = -1;
+  if (modalImg) { modalImg.src = ''; modalImg.alt = ''; }
+}
 
-document.querySelectorAll('.ba-side img').forEach((img, index) => {
-  img.addEventListener('click', () => {
-    openImageModal(index);
+function updateModalNav() {
+  const p = document.getElementById('imageModalPrev');
+  const n = document.getElementById('imageModalNext');
+  if (p) p.style.display = _currentIdx > 0                    ? 'flex' : 'none';
+  if (n) n.style.display = _currentIdx < _allImgs.length - 1  ? 'flex' : 'none';
+}
+
+function attachLightboxClicks() {
+  buildImgList();
+  _allImgs.forEach((img, i) => {
+    img.style.cursor = 'zoom-in';
+    const clone = img.cloneNode(true);
+    clone.style.cursor = 'zoom-in';
+    img.parentNode.replaceChild(clone, img);
+    /* FIX: capture index at click time, not from stale _allImgs */
+    clone.addEventListener('click', () => {
+      buildImgList();
+      const liveIdx = _allImgs.indexOf(clone);
+      openModal(liveIdx !== -1 ? liveIdx : i);
+    });
   });
-});
-
-if (imageModalClose) {
-  imageModalClose.addEventListener('click', closeImageModal);
+  buildImgList();
 }
 
-if (imageModalBackdrop) {
-  imageModalBackdrop.addEventListener('click', closeImageModal);
-}
+(function initModal() {
+  const btnClose = document.getElementById('imageModalClose');
+  const backdrop = document.getElementById('imageModalBackdrop');
+  const btnPrev  = document.getElementById('imageModalPrev');
+  const btnNext  = document.getElementById('imageModalNext');
+  if (btnClose) btnClose.addEventListener('click', closeModal);
+  if (backdrop) backdrop.addEventListener('click', closeModal);
+  if (btnPrev)  btnPrev.addEventListener('click', () => { if (_currentIdx > 0) openModal(_currentIdx - 1); });
+  if (btnNext)  btnNext.addEventListener('click', () => { if (_currentIdx < _allImgs.length - 1) openModal(_currentIdx + 1); });
+  document.addEventListener('keydown', e => {
+    const modal = document.getElementById('imageModal');
+    if (!modal?.classList.contains('open')) return;
+    if (e.key === 'Escape')    closeModal();
+    if (e.key === 'ArrowLeft'  && _currentIdx > 0)                   openModal(_currentIdx - 1);
+    if (e.key === 'ArrowRight' && _currentIdx < _allImgs.length - 1) openModal(_currentIdx + 1);
+  });
+  attachLightboxClicks();
+})();
 
-if (imageModalPrev) {
-  imageModalPrev.addEventListener('click', showPrevImage);
-}
+/* ══ TOAST NOTIFICATION ══ */
+let _toastTimer = null;
 
-if (imageModalNext) {
-  imageModalNext.addEventListener('click', showNextImage);
-}
-
-document.addEventListener('keydown', (e) => {
-  if (!imageModal.classList.contains('open')) return;
-  if (e.key === 'Escape') {
-    closeImageModal();
-  } else if (e.key === 'ArrowLeft') {
-    showPrevImage();
-  } else if (e.key === 'ArrowRight') {
-    showNextImage();
+function showToast(type, title, message) {
+  let container = document.getElementById('toastContainer');
+  if (!container) {
+    container = document.createElement('div');
+    container.id = 'toastContainer';
+    container.setAttribute('aria-live', 'polite');
+    Object.assign(container.style, {
+      position: 'fixed', bottom: '2rem', right: '1.5rem',
+      zIndex: '9999', display: 'flex', flexDirection: 'column', gap: '10px'
+    });
+    document.body.appendChild(container);
   }
-});
 
-/* ── 5. Contact Form → WhatsApp ── */
+  const icons = {
+    success: '<svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="10" cy="10" r="8"/><path d="M6.5 10.5l2.5 2.5 4.5-5" stroke-linecap="round" stroke-linejoin="round"/></svg>',
+    error:   '<svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="10" cy="10" r="8"/><path d="M7 13l6-6M13 13L7 7" stroke-linecap="round"/></svg>',
+    warning: '<svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M10 3L18 17H2L10 3z" stroke-linejoin="round"/><line x1="10" y1="9" x2="10" y2="13" stroke-linecap="round"/><circle cx="10" cy="15.5" r="0.8" fill="currentColor" stroke="none"/></svg>'
+  };
+  const colors = {
+    success: { bg: '#0F6E56', icon: '#5DCAA5' },
+    error:   { bg: '#7A1F1F', icon: '#F09595' },
+    warning: { bg: '#633806', icon: '#FAC775' }
+  };
+  const c = colors[type] || colors.success;
+
+  const toast = document.createElement('div');
+  toast.innerHTML = `
+    <div style="width:20px;height:20px;flex-shrink:0;color:${c.icon}">${icons[type]}</div>
+    <div style="flex:1;min-width:0">
+      <div style="font-weight:600;font-size:14px;color:#fff;margin-bottom:2px">${title}</div>
+      <div style="font-size:13px;color:rgba(255,255,255,0.75);line-height:1.4">${message}</div>
+    </div>
+    <button aria-label="Fechar" style="background:none;border:none;cursor:pointer;color:rgba(255,255,255,0.5);padding:2px;line-height:1;font-size:18px;flex-shrink:0">&times;</button>
+  `;
+  Object.assign(toast.style, {
+    display: 'flex', alignItems: 'flex-start', gap: '12px',
+    background: c.bg, borderRadius: '10px', padding: '14px 16px',
+    boxShadow: '0 8px 24px rgba(0,0,0,0.35)', maxWidth: '340px', width: '100%',
+    opacity: '0', transform: 'translateY(12px)',
+    transition: 'opacity 0.28s ease, transform 0.28s ease'
+  });
+
+  toast.querySelector('button').addEventListener('click', () => dismissToast(toast));
+  container.appendChild(toast);
+
+  requestAnimationFrame(() => requestAnimationFrame(() => {
+    toast.style.opacity = '1';
+    toast.style.transform = 'translateY(0)';
+  }));
+
+  clearTimeout(_toastTimer);
+  _toastTimer = setTimeout(() => dismissToast(toast), 5000);
+}
+
+function dismissToast(toast) {
+  toast.style.opacity = '0';
+  toast.style.transform = 'translateY(12px)';
+  setTimeout(() => toast.remove(), 300);
+}
+
+/* ── 5. Contact form ── */
 function handleForm(e) {
   e.preventDefault();
-
-  const nome   = document.getElementById('nome').value.trim();
-  const tel    = document.getElementById('telefone').value.trim();
-  const serv   = document.getElementById('servico').value || 'Não informado';
-  const msg    = document.getElementById('mensagem').value.trim() || 'Não informado';
+  const nome = document.getElementById('nome')?.value.trim();
+  const tel  = document.getElementById('telefone')?.value.trim();
 
   if (!nome || !tel) {
-    alert('Por favor, preencha nome e telefone!');
+    showToast('warning', 'Campos obrigatórios', 'Por favor preencha o seu nome e telefone.');
     return;
   }
 
-  const text = `Olá! Vim pelo site e gostaria de solicitar um orçamento. 😊\n\n*Nome:* ${nome}\n*Telefone:* ${tel}\n*Serviço:* ${serv}\n*Mensagem:* ${msg}`;
+  const btn = e.target.querySelector('button[type="submit"]');
+  const originalText = btn?.textContent;
+  if (btn) { btn.disabled = true; btn.textContent = 'A enviar…'; }
 
-  window.open(
-    `https://wa.me/5583996956060?text=${encodeURIComponent(text)}`,
-    '_blank',
-    'noopener,noreferrer'
-  );
-
-  document.getElementById('contactForm').reset();
+  fetch('https://formspree.io/f/xvzlknad', {
+    method: 'POST',
+    body: new FormData(document.getElementById('contactForm')),
+    headers: { 'Accept': 'application/json' }
+  })
+  .then(r => r.json())
+  .then(data => {
+    if (data.ok) {
+      showToast('success', 'Mensagem enviada!', 'Entraremos em contacto em breve. Obrigado!');
+      document.getElementById('contactForm').reset();
+    } else {
+      showToast('error', 'Erro ao enviar', 'Tente novamente ou contacte-nos pelo WhatsApp.');
+    }
+  })
+  .catch(() => {
+    showToast('error', 'Sem ligação', 'Verifique a sua ligação ou contacte-nos pelo WhatsApp.');
+  })
+  .finally(() => {
+    if (btn) { btn.disabled = false; btn.textContent = originalText; }
+  });
 }
 
-/* ── 6. Graceful image error fallback ── */
+/* ── 6. Image error fallback ── */
 document.querySelectorAll('img').forEach(img => {
   if (img.id === 'imageModalImg') return;
-  img.addEventListener('error', function () {
-    this.style.display = 'none';
-  });
+  img.addEventListener('error', function () { this.style.display = 'none'; });
 });
