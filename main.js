@@ -4,8 +4,27 @@
 
 /* ── overflow lock counter (prevents menu/modal race) ── */
 let _overflowLocks = 0;
-function lockScroll()   { if (++_overflowLocks === 1) document.body.style.overflow = 'hidden'; }
-function unlockScroll() { if (--_overflowLocks <= 0) { _overflowLocks = 0; document.body.style.overflow = ''; } }
+let _touchBlocker = null;
+
+function lockScroll() {
+  if (++_overflowLocks === 1) {
+    document.body.style.overflow = 'hidden';
+    /* iOS Safari fix: block touchmove so page doesn't scroll behind modal */
+    _touchBlocker = e => { if (e.cancelable) e.preventDefault(); };
+    document.addEventListener('touchmove', _touchBlocker, { passive: false });
+  }
+}
+
+function unlockScroll() {
+  if (--_overflowLocks <= 0) {
+    _overflowLocks = 0;
+    document.body.style.overflow = '';
+    if (_touchBlocker) {
+      document.removeEventListener('touchmove', _touchBlocker, { passive: false });
+      _touchBlocker = null;
+    }
+  }
+}
 
 /* ── 1. Mobile Menu ── */
 function toggleMenu() {
@@ -73,7 +92,7 @@ document.querySelectorAll('a[href^="#"]').forEach(a => {
   const btnLess = document.getElementById('baPrev');
   if (!grid || !btnMore) return;
 
-  const SHOW_DEFAULT = 2; /* FIX: was 2*/
+  const SHOW_DEFAULT = 2;
   const cards = Array.from(grid.querySelectorAll('.ba-card'));
 
   function collapse() {
@@ -136,6 +155,10 @@ function closeModal() {
   if (!modal) return;
   modal.classList.remove('open');
   modal.setAttribute('aria-hidden', 'true');
+  /* FIX: force-reset counter so unlock always fires, even if
+     openModal was called with an invalid index and lockScroll
+     ran without a matching unlockScroll */
+  _overflowLocks = 1;
   unlockScroll();
   _currentIdx = -1;
   if (modalImg) { modalImg.src = ''; modalImg.alt = ''; }
@@ -148,18 +171,20 @@ function updateModalNav() {
   if (n) n.style.display = _currentIdx < _allImgs.length - 1  ? 'flex' : 'none';
 }
 
+/* FIX: removed cloneNode approach — cloning detached img refs from
+   _allImgs, causing indexOf() to return -1 and openModal(-1) to
+   bail out without ever releasing the scroll lock.
+   Now we bind directly on the img element using a data-attribute
+   guard to prevent double-binding on repeated calls. */
 function attachLightboxClicks() {
-  buildImgList();
-  _allImgs.forEach((img, i) => {
+  document.querySelectorAll('.ba-card:not(.hidden) .ba-side img').forEach(img => {
+    if (img.dataset.lightboxBound) return; /* skip already-bound images */
+    img.dataset.lightboxBound = '1';
     img.style.cursor = 'zoom-in';
-    const clone = img.cloneNode(true);
-    clone.style.cursor = 'zoom-in';
-    img.parentNode.replaceChild(clone, img);
-    /* FIX: capture index at click time, not from stale _allImgs */
-    clone.addEventListener('click', () => {
+    img.addEventListener('click', () => {
       buildImgList();
-      const liveIdx = _allImgs.indexOf(clone);
-      openModal(liveIdx !== -1 ? liveIdx : i);
+      const idx = _allImgs.indexOf(img);
+      if (idx !== -1) openModal(idx);
     });
   });
   buildImgList();
