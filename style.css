@@ -26,8 +26,8 @@
   /* layout */
   --nav-h:        68px;
   --radius:       16px;
-  --section-pad:  5rem 1.5rem;
-  --section-pad-m: 3rem 1rem;
+  --section-pad:  4rem 1.5rem;
+--section-pad-m: 2.25rem 1rem;
 }
 
 html {
@@ -499,6 +499,15 @@ section { padding: var(--section-pad); }
   line-height: 1.7;
   color: var(--gray);
   font-style: italic;
+}
+
+/* Fix spacing between hero and next section */
+#hero {
+  padding-bottom: 2rem; /* reduce bottom space */
+}
+
+#about {
+  margin-top: -2rem; /* pull section up slightly */
 }
 
 .feats { list-style: none; margin-top: 0.5rem; }
@@ -1212,12 +1221,7 @@ footer { background: var(--dark); padding: 3.5rem 1.5rem 2rem; }
   .nav-cta        { display: none; }
   .hamburger      { display: flex; }
 
-  .hero-grid {
-    grid-template-columns: 1fr;
-    padding: 2.5rem 1.25rem 3rem;
-    gap: 2.5rem;
-    text-align: center;
-  }
+.hero-grid {\r\n    grid-template-columns: 1fr;\r\n    padding: 1.75rem 1rem 2rem;\r\n    gap: 2rem;\r\n    text-align: center;\r\n  }
 
   .hero-content { order: 1; }
   .hero-right   { order: 2; display: block; }
@@ -1249,9 +1253,9 @@ footer { background: var(--dark); padding: 3.5rem 1.5rem 2rem; }
 
   .about-img-box { height: 300px; }
 
-  .why-grid     { grid-template-columns: 1fr; gap: 2rem; }
+.why-grid     { grid-template-columns: 1fr; gap: 1.75rem; }
   .why-cards    { grid-template-columns: 1fr 1fr; }
-  .why-visual   { display: none; } /* hide photo on small screens */
+.why-visual   { order: -1; margin-bottom: 1.5rem; } /* show above cards on mobile */
 
   .ba-controls  { justify-content: center; }
   .ba-control   { flex: 1; max-width: 200px; }
@@ -1263,7 +1267,7 @@ footer { background: var(--dark); padding: 3.5rem 1.5rem 2rem; }
 @media (max-width: 430px) {
   :root { --section-pad: 3rem 1rem; }
 
-  nav { padding: 0 1rem; }
+nav { padding: 0 0.875rem; }
 
   .hero-grid    { padding: 2rem 1rem 2.5rem; }
   .hero-title   { font-size: clamp(1.85rem, 8vw, 2.4rem); }
